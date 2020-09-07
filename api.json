@@ -14,7 +14,7 @@
       "url": "/portal/license"
     }
   },
-  "host": "localhost:8383",
+  "host": "https://api-test.uturn-system.com",
   "basePath": "/portal",
   "tags": [
     {
