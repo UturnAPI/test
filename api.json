@@ -38,9 +38,9 @@
         ],
         "parameters": [
           {
-            "name": "apiKey",
+            "name": "api_key",
             "in": "header",
-            "description": "apiKey",
+            "description": "api_key",
             "required": true,
             "type": "string"
           },
@@ -58,6 +58,70 @@
             "required": true,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "name": "cancelReason",
+            "in": "path",
+            "description": "cancelReason",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/shippers/cancel/{shipmentNr}/{cancelReason}": {
+      "put": {
+        "tags": [
+          "Shippers"
+        ],
+        "summary": "Cancel a shipment in Uturn platform.",
+        "operationId": "cancelShipmentUsingPUT_1",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "api_key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "description": "requestedBy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "description": "shipmentNr",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cancelReason",
+            "in": "path",
+            "description": "cancelReason",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -88,9 +152,9 @@
         ],
         "parameters": [
           {
-            "name": "apiKey",
+            "name": "api_key",
             "in": "header",
-            "description": "apiKey",
+            "description": "api_key",
             "required": true,
             "type": "string"
           },
@@ -141,9 +205,9 @@
         ],
         "parameters": [
           {
-            "name": "apiKey",
+            "name": "api_key",
             "in": "header",
-            "description": "apiKey",
+            "description": "api_key",
             "required": true,
             "type": "string"
           },
@@ -184,6 +248,59 @@
         }
       }
     },
+    "/shippers/executionDetails/{shipmentNr}": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "summary": "Get execution details of a shipment.",
+        "operationId": "getExecutionDetailsUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "api_key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "description": "requestedBy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "description": "shipmentNr",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/TransportExecutionDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
     "/shippers/invoiceLines/{shipmentNr}": {
       "get": {
         "tags": [
@@ -199,9 +316,9 @@
         ],
         "parameters": [
           {
-            "name": "apiKey",
+            "name": "api_key",
             "in": "header",
-            "description": "apiKey",
+            "description": "api_key",
             "required": true,
             "type": "string"
           },
@@ -252,9 +369,9 @@
         ],
         "parameters": [
           {
-            "name": "apiKey",
+            "name": "api_key",
             "in": "header",
-            "description": "apiKey",
+            "description": "api_key",
             "required": true,
             "type": "string"
           },
@@ -297,9 +414,9 @@
         ],
         "parameters": [
           {
-            "name": "apiKey",
+            "name": "api_key",
             "in": "header",
-            "description": "apiKey",
+            "description": "api_key",
             "required": true,
             "type": "string"
           },
@@ -350,9 +467,9 @@
         ],
         "parameters": [
           {
-            "name": "apiKey",
+            "name": "api_key",
             "in": "header",
-            "description": "apiKey",
+            "description": "api_key",
             "required": true,
             "type": "string"
           },
@@ -535,11 +652,6 @@
           "example": 12000,
           "description": "Weight to be loaded + tare weight of container"
         },
-        "hazardous": {
-          "type": "boolean",
-          "example": false,
-          "description": "If TRUE the carrier requires ADR certificates. If not filled, by default FALSE"
-        },
         "invoiceReference": {
           "type": "string",
           "example": "Invoice52846",
@@ -657,11 +769,6 @@
           "example": 12000,
           "description": "Weight to be loaded + tare weight of container"
         },
-        "hazardous": {
-          "type": "boolean",
-          "example": false,
-          "description": "If TRUE the carrier requires ADR certificates. If not filled, by default FALSE"
-        },
         "invoiceReference": {
           "type": "string",
           "example": "Invoice52846",
@@ -762,49 +869,49 @@
       "properties": {
         "shipmentUnits": {
           "type": "array",
-          "description": "The type of equipment that needs to be transported",
+          "description": "The type of equipment that needs to be transported.",
           "items": {
             "$ref": "#/definitions/EquipmentType"
           }
         },
         "shippingLines": {
           "type": "array",
-          "description": "The shipping line for this shipment used to make pre-announcements",
+          "description": "The shipping line for this shipment used to make pre-announcements.",
           "items": {
             "$ref": "#/definitions/ShippingLine2"
           }
         },
         "productCategories": {
           "type": "array",
-          "description": "The general type of goods that are in the container, list can be provided",
+          "description": "The general type of goods that are in the container, list can be provided.",
           "items": {
             "$ref": "#/definitions/ProductCategory"
           }
         },
         "requirements": {
           "type": "array",
-          "description": "The general type of goods that are in the container, list can be provided",
+          "description": "The general type of goods that are in the container, list can be provided.",
           "items": {
             "$ref": "#/definitions/Requirement"
           }
         },
         "countries": {
           "type": "array",
-          "description": "The list of countries",
+          "description": "The list of countries.",
           "items": {
             "$ref": "#/definitions/CountryDTO"
           }
         },
         "cancellationTypes": {
           "type": "array",
-          "description": "The list of valid shipment cancellation reasons",
+          "description": "The list of valid shipment cancellation reasons.",
           "items": {
             "$ref": "#/definitions/CancellationTypeDTO"
           }
         },
         "invoiceLineStatusList": {
           "type": "array",
-          "description": "The list of valid shipment cancellation reasons",
+          "description": "The list of valid invoice line statuses.",
           "items": {
             "$ref": "#/definitions/InvoiceLineStatusDTO"
           }
@@ -946,6 +1053,45 @@
         }
       }
     },
+    "TransportExecutionDetails": {
+      "type": "object",
+      "required": [
+        "transportStops"
+      ],
+      "properties": {
+        "equipmentId": {
+          "type": "string",
+          "example": "FOTU1234567",
+          "description": "The container number of the transport order"
+        },
+        "seal": {
+          "type": "string",
+          "example": "ABC123",
+          "description": "Seal number of the equipment"
+        },
+        "shipmentStatus": {
+          "type": "string",
+          "description": "Current status of the shipment.Not required during creation of shipment."
+        },
+        "tareWeight": {
+          "type": "integer",
+          "format": "int32",
+          "example": 3500,
+          "description": "The weight of the container"
+        },
+        "transportStops": {
+          "type": "array",
+          "description": "Array of minimum 2 or more stops describing the stops required to execute the transport",
+          "items": {
+            "$ref": "#/definitions/TransportStop"
+          }
+        },
+        "tsoStatus": {
+          "type": "string",
+          "description": "Current status of Transport Order.Not required during creation of shipment."
+        }
+      }
+    },
     "TransportLocation": {
       "type": "object",
       "required": [
@@ -1013,7 +1159,7 @@
           "description": "The execution order of this stop in the transport"
         },
         "location": {
-          "description": "The location of the stop",
+          "description": "The location of the stop.Address details (street, houseNumber, city etc.) are only needed when the location is unknown, Google Maps API will be used to determine the exact location.",
           "$ref": "#/definitions/TransportLocation"
         },
         "stopType": {
@@ -1068,19 +1214,19 @@
           "type": "string",
           "format": "date-time",
           "example": "2019-11-11T13:34",
-          "description": "Actual arrival of carrier for this location"
+          "description": "Actual arrival of carrier for this location.The format is ISO-8601 local date"
         },
         "actualDeparture": {
           "type": "string",
           "format": "date-time",
           "example": "2019-11-12T13:34",
-          "description": "Actual departure of carrier for this location"
+          "description": "Actual departure of carrier for this location.The format is ISO-8601 local date"
         },
         "eta": {
           "type": "string",
           "format": "date-time",
           "example": "2019-11-12T13:34",
-          "description": "ETA for this location"
+          "description": "ETA for this location.The format is ISO-8601 local date"
         }
       }
     }
