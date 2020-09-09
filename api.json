@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "20200908-12:07:40.ed48938",
+    "version": "20200909-09:42:23.56b2a71",
     "title": "Uturn API documentation",
     "termsOfService": "UTURN License",
     "contact": {
@@ -14,7 +14,7 @@
       "url": "/portal/license"
     }
   },
-  "host": "api-test.uturn-system.com",
+  "host": "portal-test.uturn-system.com",
   "basePath": "/portal",
   "tags": [
     {
@@ -649,13 +649,13 @@
         "publishFrom": {
           "type": "string",
           "format": "date-time",
-          "example": "2019-11-11T13:34:58.80+02:00",
+          "example": "2021-11-11T13:34:58.80+02:00",
           "description": "If not filled, by default current date time"
         },
         "publishUntil": {
           "type": "string",
           "format": "date-time",
-          "example": "2019-11-11T13:34:58.80+02:00",
+          "example": "2021-11-11T13:34:58.80+02:00",
           "description": "If not filled, by default stop1 Until Date time"
         },
         "carriers": {
@@ -779,13 +779,13 @@
         "publishFrom": {
           "type": "string",
           "format": "date-time",
-          "example": "2019-11-11T13:34:58.80+02:00",
+          "example": "2021-11-11T13:34:58.80+02:00",
           "description": "If not filled, by default current date time"
         },
         "publishUntil": {
           "type": "string",
           "format": "date-time",
-          "example": "2019-11-11T13:34:58.80+02:00",
+          "example": "2021-11-11T13:34:58.80+02:00",
           "description": "If not filled, by default stop1 Until Date time"
         },
         "carriers": {
@@ -1122,13 +1122,13 @@
         "from": {
           "type": "string",
           "format": "date-time",
-          "example": "2019-11-11T13:34",
+          "example": "2021-11-11T13:34",
           "description": "Start of window for this location"
         },
         "until": {
           "type": "string",
           "format": "date-time",
-          "example": "2019-11-12T13:34",
+          "example": "2021-11-12T13:34",
           "description": "End of window for this location"
         },
         "reference": {
@@ -1158,19 +1158,19 @@
         "actualArrival": {
           "type": "string",
           "format": "date-time",
-          "example": "2019-11-11T13:34",
+          "example": "2021-11-11T13:34",
           "description": "Actual arrival of carrier for this location.The format is ISO-8601 local date"
         },
         "actualDeparture": {
           "type": "string",
           "format": "date-time",
-          "example": "2019-11-12T13:34",
+          "example": "2021-11-12T13:34",
           "description": "Actual departure of carrier for this location.The format is ISO-8601 local date"
         },
         "eta": {
           "type": "string",
           "format": "date-time",
-          "example": "2019-11-12T13:34",
+          "example": "2021-11-12T13:34",
           "description": "ETA for this location.The format is ISO-8601 local date"
         }
       }
