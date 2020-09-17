@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "20200916-13:32:45.729020a",
+    "version": "20200917-08:15:54",
     "title": "Uturn API documentation",
     "termsOfService": "UTURN License",
     "contact": {
@@ -14,7 +14,7 @@
       "url": "/portal/license"
     }
   },
-  "host": "portal-test.uturn-system.com",
+  "host": "api-test.uturn-system.com",
   "basePath": "/portal",
   "tags": [
     {
