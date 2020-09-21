@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "20200917-08:15:54",
+    "version": "20200921-09:54:40",
     "title": "Uturn API documentation",
     "termsOfService": "UTURN License",
     "contact": {
@@ -397,6 +397,60 @@
         }
       }
     },
+    "/shippers/update": {
+      "post": {
+        "tags": [
+          "Shippers"
+        ],
+        "summary": "Update a shipment.",
+        "operationId": "updateShipmentUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "api_key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "description": "requestedBy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "request",
+            "description": "request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GenericAPIShipment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
     "/shippers/withdraw/{shipmentNr}": {
       "post": {
         "tags": [
@@ -585,7 +639,7 @@
         },
         "shippingLine": {
           "description": "The shipping line for this shipment used to make pre-announcements",
-          "$ref": "#/definitions/ShippingLine2"
+          "$ref": "#/definitions/ShippingLine"
         },
         "unCode": {
           "type": "string",
@@ -720,7 +774,7 @@
         },
         "shippingLine": {
           "description": "The shipping line for this shipment used to make pre-announcements",
-          "$ref": "#/definitions/ShippingLine2"
+          "$ref": "#/definitions/ShippingLine"
         },
         "unCode": {
           "type": "string",
@@ -818,7 +872,7 @@
           "type": "array",
           "description": "The shipping line for this shipment used to make pre-announcements.",
           "items": {
-            "$ref": "#/definitions/ShippingLine2"
+            "$ref": "#/definitions/ShippingLine"
           }
         },
         "productCategories": {
@@ -978,7 +1032,7 @@
         }
       }
     },
-    "ShippingLine2": {
+    "ShippingLine": {
       "type": "object",
       "properties": {
         "code": {
@@ -1011,7 +1065,7 @@
         },
         "shipmentStatus": {
           "type": "string",
-          "description": "Current status of the shipment.Not required during creation of shipment."
+          "description": "Current status of the shipment."
         },
         "tareWeight": {
           "type": "integer",
@@ -1028,7 +1082,7 @@
         },
         "tsoStatus": {
           "type": "string",
-          "description": "Current status of Transport Order.Not required during creation of shipment."
+          "description": "Current status of Transport Order."
         }
       }
     },
@@ -1138,7 +1192,7 @@
         },
         "shippingLine": {
           "description": "The shipping line for this stop to make pre-announcements, if it's different than the one specified in shipment",
-          "$ref": "#/definitions/ShippingLine2"
+          "$ref": "#/definitions/ShippingLine"
         },
         "vesselName": {
           "type": "string",
