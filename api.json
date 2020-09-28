@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "20200922-14:31:35",
+    "version": "20200928-09:21:39",
     "title": "Uturn API documentation",
     "termsOfService": "UTURN License",
     "contact": {
@@ -949,6 +949,7 @@
       "type": "object",
       "required": [
         "location",
+        "sequenceNumber",
         "stopType"
       ],
       "properties": {
@@ -1041,6 +1042,7 @@
         "shipmentNumber": {
           "type": "integer",
           "format": "int32",
+          "example": 70014195,
           "description": "Shipment number. Not required during creation of shipment."
         },
         "user": {
@@ -1121,12 +1123,12 @@
         "vat": {
           "type": "boolean",
           "example": false,
-          "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment. By default TRUE"
+          "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment."
         },
         "acceptancePrice": {
           "type": "boolean",
           "example": true,
-          "description": "If TRUE carriers can accept the shipment for the price. If FALSE, it is bid only. If not filled, by default FALSE"
+          "description": "If TRUE carriers can accept the shipment for the price. If FALSE, it is bid only."
         },
         "carriers": {
           "type": "array",
