@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "20200928-09:21:39",
+    "version": "20201015-11:05:51",
     "title": "Uturn API documentation",
     "termsOfService": "UTURN License",
     "contact": {
@@ -251,8 +251,8 @@
         "tags": [
           "Shippers"
         ],
-        "summary": "Get invoice lines for a shipment.",
-        "operationId": "getInvoiceLinesUsingGET",
+        "summary": "Get cost lines for a shipment.",
+        "operationId": "getCostLinesUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -287,7 +287,7 @@
           "200": {
             "description": "Ok",
             "schema": {
-              "$ref": "#/definitions/ShipmentInvoiceLinesDTO"
+              "$ref": "#/definitions/CostLines"
             }
           },
           "403": {
@@ -523,6 +523,85 @@
         }
       }
     },
+    "CostLine": {
+      "type": "object",
+      "properties": {
+        "invoiceNumber": {
+          "type": "integer",
+          "format": "int32",
+          "example": "2020-10-16",
+          "description": "Invoice number of the related invoice (if applicable)."
+        },
+        "description": {
+          "type": "string",
+          "example": "70013199 - Transport",
+          "description": "Description of the cost line. Normally the shipment ID in combination with the cost type."
+        },
+        "reference": {
+          "type": "string",
+          "example": "Some reference",
+          "description": "The invoice reference of the shipment."
+        },
+        "lineStatus": {
+          "type": "string",
+          "example": "Wait for Approval",
+          "description": "The status of the cost line."
+        },
+        "amount": {
+          "type": "number",
+          "example": 150,
+          "description": "Amount of the cost line."
+        },
+        "taxCode": {
+          "type": "string",
+          "example": "NL0",
+          "description": "The tax code of the cost line."
+        },
+        "vatAmount": {
+          "type": "number",
+          "example": 150,
+          "description": "Vat amount of the cost line."
+        },
+        "totalAmount": {
+          "type": "number",
+          "example": 150,
+          "description": "Total amount of the cost line. Amount plus vatAmount."
+        },
+        "approvedDate": {
+          "type": "string",
+          "format": "date",
+          "example": "2020-10-16",
+          "description": "Date that the cost line was approved in the platform."
+        }
+      }
+    },
+    "CostLines": {
+      "type": "object",
+      "properties": {
+        "lines": {
+          "type": "array",
+          "description": "List of cost line objects.",
+          "items": {
+            "$ref": "#/definitions/CostLine"
+          }
+        },
+        "totalExclusiveVAT": {
+          "type": "number",
+          "example": 150,
+          "description": "Total amount of the cost lines of the shipment, excluding VAT."
+        },
+        "totalInclusiveVAT": {
+          "type": "number",
+          "example": 150,
+          "description": "Total VAT amount of the cost lines of the shipment."
+        },
+        "totalVAT": {
+          "type": "number",
+          "example": 150,
+          "description": "Total amount of the cost lines of the shipment, including VAT."
+        }
+      }
+    },
     "CountryDTO": {
       "type": "object",
       "properties": {
@@ -723,6 +802,13 @@
           "items": {
             "$ref": "#/definitions/InvoiceLineStatusDTO"
           }
+        },
+        "tsoStatusList": {
+          "type": "array",
+          "description": "The list of valid TSO statuses.",
+          "items": {
+            "$ref": "#/definitions/TSOStatus"
+          }
         }
       }
     },
@@ -769,83 +855,6 @@
         }
       }
     },
-    "ShipmentInvoiceLineDTO": {
-      "type": "object",
-      "properties": {
-        "amount": {
-          "type": "number",
-          "example": 150,
-          "description": "Amount of the invoice line"
-        },
-        "approvedDate": {
-          "type": "string",
-          "format": "date",
-          "example": "2020-08-16",
-          "description": "Date that the invoice line was approved in the platform."
-        },
-        "description": {
-          "type": "string",
-          "example": "70013199 - Transport",
-          "description": "Description of the invoice invoice line. Normally the shipment ID in combination with the cost type"
-        },
-        "invoiceNumber": {
-          "type": "integer",
-          "format": "int32",
-          "example": 10000872,
-          "description": "Invoice number of the related invoice (if applicable)."
-        },
-        "lineStatus": {
-          "type": "string",
-          "example": "Wait for Approval",
-          "description": "The status of the invoice line."
-        },
-        "reference": {
-          "type": "string",
-          "example": "Some reference",
-          "description": "The invoice reference of the shipment."
-        },
-        "taxCode": {
-          "type": "string",
-          "description": "The tax code of the invoice line."
-        },
-        "totalAmount": {
-          "type": "number",
-          "example": 150,
-          "description": "Total amount of the invoice line. Amount plus vatAmount."
-        },
-        "vatAmount": {
-          "type": "number",
-          "example": 150,
-          "description": "Vat amount of the invoice line."
-        }
-      }
-    },
-    "ShipmentInvoiceLinesDTO": {
-      "type": "object",
-      "properties": {
-        "lines": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ShipmentInvoiceLineDTO"
-          }
-        },
-        "totalExclusiveVAT": {
-          "type": "number",
-          "example": 150,
-          "description": "Total amount of the invoice lines of the shipment, excluding VAT"
-        },
-        "totalInclusiveVAT": {
-          "type": "number",
-          "example": 150,
-          "description": "Total amount of the invoice lines of the shipment, including VAT"
-        },
-        "totalVAT": {
-          "type": "number",
-          "example": 150,
-          "description": "Total VAT amount of the invoice lines of the shipment"
-        }
-      }
-    },
     "ShippingLine": {
       "type": "object",
       "properties": {
@@ -858,6 +867,21 @@
           "type": "string",
           "example": "CMA-CGM",
           "description": "The name of the shipping line"
+        }
+      }
+    },
+    "TSOStatus": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "example": "In Progress",
+          "description": "Status description of the TSO."
+        },
+        "code": {
+          "type": "string",
+          "example": "IP",
+          "description": "Status code of the TSO."
         }
       }
     },
