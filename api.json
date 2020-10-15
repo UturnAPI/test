@@ -593,12 +593,12 @@
         "totalInclusiveVAT": {
           "type": "number",
           "example": 150,
-          "description": "Total VAT amount of the cost lines of the shipment."
+          "description": "Total amount of the cost lines of the shipment, including VAT."
         },
         "totalVAT": {
           "type": "number",
           "example": 150,
-          "description": "Total amount of the cost lines of the shipment, including VAT."
+          "description": "Total VAT amount of the cost lines of the shipment."
         }
       }
     },
