@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "20201015-11:05:51",
+    "version": "20201028-12:58:23",
     "title": "Uturn API documentation",
     "termsOfService": "UTURN License",
     "contact": {
@@ -529,7 +529,7 @@
         "invoiceNumber": {
           "type": "integer",
           "format": "int32",
-          "example": "1234567",
+          "example": 1234567,
           "description": "Invoice number of the related invoice (if applicable)."
         },
         "description": {
@@ -716,7 +716,7 @@
         "vat": {
           "type": "boolean",
           "example": false,
-          "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment. By default TRUE"
+          "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment. By default FALSE"
         },
         "acceptancePrice": {
           "type": "boolean",
