@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "20201028-12:58:23",
+    "version": "20201127-10:51:06.1ec1f7d",
     "title": "Uturn API documentation",
     "termsOfService": "UTURN License",
     "contact": {
@@ -487,6 +487,16 @@
             "type": "string"
           }
         },
+        "cargoCardNumber": {
+          "type": "integer",
+          "format": "int64",
+          "description": "CargoCard number of the carrier."
+        },
+        "eanNumber": {
+          "type": "integer",
+          "format": "int64",
+          "description": "EAN number of the carrier."
+        },
         "email": {
           "type": "string",
           "example": "maxcar16@mailinator.com",
@@ -549,7 +559,7 @@
         },
         "amount": {
           "type": "number",
-          "example": 150,
+          "example": 150.0,
           "description": "Amount of the cost line."
         },
         "taxCode": {
@@ -559,12 +569,12 @@
         },
         "vatAmount": {
           "type": "number",
-          "example": 150,
+          "example": 150.0,
           "description": "Vat amount of the cost line."
         },
         "totalAmount": {
           "type": "number",
-          "example": 150,
+          "example": 150.0,
           "description": "Total amount of the cost line. Amount plus vatAmount."
         },
         "approvedDate": {
@@ -587,17 +597,17 @@
         },
         "totalExclusiveVAT": {
           "type": "number",
-          "example": 150,
+          "example": 150.0,
           "description": "Total amount of the cost lines of the shipment, excluding VAT."
         },
         "totalInclusiveVAT": {
           "type": "number",
-          "example": 150,
+          "example": 150.0,
           "description": "Total amount of the cost lines of the shipment, including VAT."
         },
         "totalVAT": {
           "type": "number",
-          "example": 150,
+          "example": 150.0,
           "description": "Total VAT amount of the cost lines of the shipment."
         }
       }
@@ -679,6 +689,7 @@
         },
         "grossWeight": {
           "type": "integer",
+          "format": "int32",
           "example": 12000,
           "description": "Weight to be loaded + tare weight of container"
         },
@@ -1110,6 +1121,7 @@
         },
         "grossWeight": {
           "type": "integer",
+          "format": "int32",
           "example": 12000,
           "description": "Weight to be loaded + tare weight of container"
         },
