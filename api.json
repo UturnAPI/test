@@ -4,7 +4,20 @@
     "version": "1.0.2",
     "title": "Uturn API documentation",
     "termsOfService": "UTURN License",
-    "description": "<div><strong class = 'uturn-strong'>Release history</strong><br><br><ol><li><strong class = 'uturn-strong'>V1.0.0</strong> :- Initial version</li><li><strong class = 'uturn-strong'>V1.0.1</strong> :- <ul class = 'uturn-ul-style'><li>Added support for get quotations on a shipment.</li><li>Added support for assigning a shipment to carrier based on quote amount.</li><li>Changed the data-type of carrier rating in <strong class = 'uturn-strong'>GET carrier details of a shipment</strong> from string to number.</li></ul>/li></ol></div>",
+    "description" : "<div>
+        <strong class = 'uturn-strong'>Release history</strong>
+        <br><br>
+        <ol>
+          <li><strong class = 'uturn-strong'>V1.0.0</strong> :- Initial version</li>
+          <li><strong class = 'uturn-strong'>V1.0.1</strong> :- 
+            <ul class = 'uturn-ul-style'>
+              <li>Added support for get quotations on a shipment.</li>
+              <li>Added support for assigning a shipment to carrier based on quote amount.</li>
+              <li>Changed the data-type of carrier rating in <strong class = 'uturn-strong'>GET carrier details of a shipment</strong> from string to number.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>",
     "contact": {
       "name": "UTURN",
       "url": "https://www.uturn-now.com",
