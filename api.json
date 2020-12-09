@@ -1,9 +1,10 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "20201127-10:51:06.1ec1f7d",
+    "version": "1.0.2",
     "title": "Uturn API documentation",
     "termsOfService": "UTURN License",
+    "description": "<div><strong class = 'uturn-strong'>Release history</strong><br><br><ol><li><strong class = 'uturn-strong'>V1.0.0</strong> :- Initial version</li><li><strong class = 'uturn-strong'>V1.0.1</strong> :- <ul class = 'uturn-ul-style'><li>Added support for get quotations on a shipment.</li><li>Added support for assigning a shipment to carrier based on quote amount.</li><li>Changed the data-type of carrier rating in <strong class = 'uturn-strong'>GET carrier details of a shipment</strong> from string to number.</li></ul>/li></ol></div>",
     "contact": {
       "name": "UTURN",
       "url": "https://www.uturn-now.com",
@@ -14,7 +15,7 @@
       "url": "/portal/license"
     }
   },
-  "host": "api-test.uturn-system.com",
+  "host": "https://api-test.uturn-system.com/",
   "basePath": "/portal",
   "tags": [
     {
@@ -23,6 +24,57 @@
     }
   ],
   "paths": {
+    "/shippers/assignCarrier": {
+      "post": {
+        "tags": [
+          "Shippers"
+        ],
+        "summary": "Assign a carrier to the shipment.",
+        "operationId": "assignShipmentToCarrierUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "api_key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "description": "requestedBy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "assignCarrierRequest",
+            "description": "assignCarrierRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AssignCarrierRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
     "/shippers/cancel/{shipmentNr}": {
       "post": {
         "tags": [
@@ -299,6 +351,62 @@
         }
       }
     },
+    "/shippers/quotes/{shipmentNr}": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "summary": "Get quotes for a shipment.",
+        "operationId": "getQuotesOnShipmentUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "api_key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "description": "requestedBy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "description": "shipmentNr",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CarrierQuote"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
     "/shippers/shipment/metaData": {
       "get": {
         "tags": [
@@ -450,6 +558,23 @@
     }
   },
   "definitions": {
+    "AssignCarrierRequest": {
+      "type": "object",
+      "properties": {
+        "quoteId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 3826,
+          "description": "ID of the quoted price. This ID is used to assign a carrier to a shipment."
+        },
+        "shipmentNr": {
+          "type": "integer",
+          "format": "int32",
+          "example": 70015066,
+          "description": "Shipment number to be assigned"
+        }
+      }
+    },
     "CancellationTypeDTO": {
       "type": "object",
       "properties": {
@@ -523,13 +648,48 @@
           "description": "Contact phone of the carrier"
         },
         "rating": {
-          "type": "string",
+          "type": "number",
+          "example": 3.1,
           "description": "Carrier rating out of 5 stars."
         },
         "surName": {
           "type": "string",
           "example": "CARREY",
           "description": "Surname of the carrier"
+        }
+      }
+    },
+    "CarrierQuote": {
+      "type": "object",
+      "properties": {
+        "capabilities": {
+          "type": "array",
+          "example": "{ADR,AEO,Gen-Set}",
+          "description": "List of capabilities provided by the carrier",
+          "items": {
+            "type": "string"
+          }
+        },
+        "organisationName": {
+          "type": "string",
+          "example": "UTURN CARRIER B.V.",
+          "description": "Organisation name of the carrier"
+        },
+        "quotedId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 3826,
+          "description": "ID of the quoted price. This ID is used to assign a carrier to a shipment."
+        },
+        "quotedPrice": {
+          "type": "number",
+          "example": 237,
+          "description": "Price quoted by the carrier"
+        },
+        "rating": {
+          "type": "number",
+          "example": 3.1,
+          "description": "Carrier rating out of 5 stars."
         }
       }
     },
@@ -559,7 +719,7 @@
         },
         "amount": {
           "type": "number",
-          "example": 150.0,
+          "example": 150,
           "description": "Amount of the cost line."
         },
         "taxCode": {
@@ -569,12 +729,12 @@
         },
         "vatAmount": {
           "type": "number",
-          "example": 150.0,
+          "example": 150,
           "description": "Vat amount of the cost line."
         },
         "totalAmount": {
           "type": "number",
-          "example": 150.0,
+          "example": 150,
           "description": "Total amount of the cost line. Amount plus vatAmount."
         },
         "approvedDate": {
@@ -597,17 +757,17 @@
         },
         "totalExclusiveVAT": {
           "type": "number",
-          "example": 150.0,
+          "example": 150,
           "description": "Total amount of the cost lines of the shipment, excluding VAT."
         },
         "totalInclusiveVAT": {
           "type": "number",
-          "example": 150.0,
+          "example": 150,
           "description": "Total amount of the cost lines of the shipment, including VAT."
         },
         "totalVAT": {
           "type": "number",
-          "example": 150.0,
+          "example": 150,
           "description": "Total VAT amount of the cost lines of the shipment."
         }
       }
