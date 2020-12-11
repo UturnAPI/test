@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "title": "Uturn API documentation",
     "termsOfService": "UTURN License",
     "description" : "<div>
@@ -16,6 +16,12 @@
               <li>Changed the data-type of carrier rating in <strong class = 'uturn-strong'>GET carrier details of a shipment</strong> from string to number.</li>
             </ul>
           </li>
+          <li><strong class = 'uturn-strong'>V1.0.2</strong> :- </li>
+            <ul class = 'uturn-ul-style'>
+                <li>Updated <strong class = 'uturn-strong'>POST Update a shipment</strong> API call to handle update contract of carriage setup</li>
+                <li>Updated field descriptions related to contract update.</li>
+                <li>Fields related to contract update will now be processed only after carrier confirms the request.</li>
+            </ul>
         </ol>
       </div>",
     "contact": {
@@ -28,7 +34,7 @@
       "url": "/portal/license"
     }
   },
-  "host": "https://api-test.uturn-system.com/",
+  "host": "https://api-test.uturn-system.com",
   "basePath": "/portal",
   "tags": [
     {
@@ -505,7 +511,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Ok"
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
           },
           "400": {
             "description": "Bad Request."
@@ -814,7 +823,7 @@
         "isoCode": {
           "type": "string",
           "example": "LEG1",
-          "description": "The ISO-code of the container"
+          "description": "The ISO-code of the container.When status is Carrier Assigned, the carrier first needs to approve the update request."
         }
       }
     },
@@ -1168,7 +1177,7 @@
           "description": "The execution order of this stop in the transport"
         },
         "location": {
-          "description": "The location of the stop.Address details (street, houseNumber, city etc.) are only needed when the location is unknown, Google Maps API will be used to determine the exact location.",
+          "description": "The location of the stop.Address details (street, houseNumber, city etc.) are only needed when the location is unknown, Google Maps API will be used to determine the exact location.When status is Carrier Assigned, the carrier first needs to approve the update request.",
           "$ref": "#/definitions/TransportLocation"
         },
         "stopType": {
@@ -1187,13 +1196,13 @@
           "type": "string",
           "format": "date-time",
           "example": "2021-11-11T13:34",
-          "description": "Start of window for this location"
+          "description": "Start of window for this location.When status is Carrier Assigned, the carrier first needs to approve the update request."
         },
         "until": {
           "type": "string",
           "format": "date-time",
           "example": "2021-11-12T13:34",
-          "description": "End of window for this location"
+          "description": "End of window for this location.When status is Carrier Assigned, the carrier first needs to approve the update request."
         },
         "reference": {
           "type": "string",
@@ -1243,8 +1252,7 @@
       "type": "object",
       "required": [
         "shipmentNumber",
-        "transportStops",
-        "user"
+        "transportStops"
       ],
       "properties": {
         "shipmentNumber": {
@@ -1252,11 +1260,6 @@
           "format": "int32",
           "example": 70014195,
           "description": "Shipment number. Not required during creation of shipment."
-        },
-        "user": {
-          "type": "string",
-          "example": "planning@shipper.nl",
-          "description": "E-mail address of the user making the request. Must be registered in the UTURN platform"
         },
         "shipmentUnit": {
           "description": "The type of equipment that needs to be transported",
@@ -1276,7 +1279,7 @@
         "generatorSet": {
           "type": "boolean",
           "example": false,
-          "description": "If TRUE a generator set will be required. If not filled, by default FALSE"
+          "description": "If TRUE a generator set will be required. If not filled, by default FALSE.When status is Carrier Assigned, the carrier first needs to approve the update request."
         },
         "shippingLine": {
           "description": "The shipping line for this shipment used to make pre-announcements",
@@ -1285,7 +1288,7 @@
         "unCode": {
           "type": "string",
           "example": "1234",
-          "description": "The four digit code identifying the type of hazardous goods. Required when hazardous"
+          "description": "The four digit code identifying the type of hazardous goods. Required when hazardous.When status is Carrier Assigned, the carrier first needs to approve the update request."
         },
         "seal": {
           "type": "string",
@@ -1296,14 +1299,14 @@
           "type": "integer",
           "format": "int32",
           "example": 12000,
-          "description": "Weight to be loaded + tare weight of container"
+          "description": "Weight to be loaded + tare weight of container.When status is Carrier Assigned, the carrier first needs to approve the update request."
         },
         "productCategory": {
-          "description": "The general type of goods that are in the container.",
+          "description": "The general type of goods that are in the container.When status is Carrier Assigned, the carrier first needs to approve the update request.",
           "$ref": "#/definitions/ProductCategory"
         },
         "requirements": {
-          "description": "The general type of goods that are in the container.",
+          "description": "The general type of goods that are in the container.When status is Carrier Assigned, the carrier first needs to approve the update request.",
           "$ref": "#/definitions/Requirement"
         },
         "remarks": {
