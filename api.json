@@ -3,6 +3,12 @@
   "info": {
     "version": "1.0.3",
     "title": "Uturn API documentation",
+    "x-logo": {
+      "url": "https://portal.uturn-system.com/assets/images/logo_uturn.png",
+      "backgroundColor": "#FFFFFF",
+      "altText": "Uturn logo",
+      "href": "https://uturn-now.com"
+    },
     "termsOfService": "UTURN License",
     "description" : "<div>
         <strong class = 'uturn-strong'>Release history</strong>
@@ -892,7 +898,7 @@
         },
         "requirementCodes": {
           "type": "array",
-          "example": "[\u0027AC\u0027, \u0027OOG\u0027]",
+          "example": "['AC', 'OOG']",
           "description": "The specific requirements for the transport. When status is Carrier Assigned, the carrier first needs to approve the update request.",
           "items": {
             "type": "string"
@@ -1295,7 +1301,7 @@
         },
         "requirementCodes": {
           "type": "array",
-          "example": "[\u0027AC\u0027, \u0027OOG\u0027]",
+          "example": "['AC', 'OOG']",
           "description": "The specific requirements for the transport. When status is Carrier Assigned, the carrier first needs to approve the update request.",
           "items": {
             "type": "string"
@@ -1327,12 +1333,12 @@
         "vat": {
           "type": "boolean",
           "example": false,
-          "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment."
+          "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment.By default FALSE."
         },
         "acceptancePrice": {
           "type": "boolean",
-          "example": true,
-          "description": "If TRUE carriers can accept the shipment for the price. If FALSE, it is bid only."
+          "example": false,
+          "description": "If TRUE carriers can accept the shipment for the price. If FALSE, it is bid only.By default FALSE."
         },
         "carriers": {
           "type": "array",
