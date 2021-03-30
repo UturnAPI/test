@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.3",
+    "version": "1.0.4",
     "title": "Uturn API documentation",
     "x-logo": {
       "url": "https://portal.uturn-system.com/assets/images/logo_uturn.png",
@@ -17,23 +17,27 @@
           <li><strong class = 'uturn-strong'>V1.0.0</strong> :- Initial version</li>
           <li><strong class = 'uturn-strong'>V1.0.1</strong> :- 
             <ul class = 'uturn-ul-style'>
-              <li>Added support for get quotations on a shipment.</li>
-              <li>Added support for assigning a shipment to carrier based on quote amount.</li>
-              <li>Changed the data-type of carrier rating in <strong class = 'uturn-strong'>GET carrier details of a shipment</strong> from string to number.</li>
+              <li>Added support for <strong class = 'uturn-strong'><a href = '#operation/getQuotesOnShipmentUsingGET'>GET quotations</a></strong> on a shipment.</li>
+              <li>Added support for <strong class = 'uturn-strong'><a href = '#operation/assignShipmentToCarrierUsingPOST'>Assign carrier</a></strong> to shipment based on quote amount.</li>
+              <li>Changed the data-type of carrier rating in <strong class = 'uturn-strong'><a href = '#operation/getCarrierContractUsingGET'>GET carrier details of a shipment</a></strong> from string to number.</li>
             </ul>
           </li>
           <li><strong class = 'uturn-strong'>V1.0.2</strong> :- </li>
             <ul class = 'uturn-ul-style'>
-                <li>Updated <strong class = 'uturn-strong'>POST Update a shipment</strong> API call to handle update contract of carriage setup</li>
+                <li>Updated <strong class = 'uturn-strong'><a href = '#operation/updateShipmentUsingPOST'>POST update to shipment</a></strong> API call to handle update contract of carriage setup</li>
                 <li>Updated field descriptions related to contract update.</li>
                 <li>Fields related to contract update will now be processed only after carrier confirms the request.</li>
             </ul>
             <li><strong class = 'uturn-strong'>V1.0.3</strong> :- </li>
             <ul class = 'uturn-ul-style'>
-                <li>Updated <strong class = 'uturn-strong'>POST Create a shipment</strong> and <strong class = 'uturn-strong'>POST Update a shipment</strong> API calls. 
+                <li>Updated <strong class = 'uturn-strong'><a href = '#operation/createShipmentUsingPOST'>POST Create a shipment</a></strong> and <strong class = 'uturn-strong'>POST Update a shipment</strong> API calls. 
                 <li><strong>productCategory</strong> field is removed and replaced by <strong>cargoDescription</strong> string field</li>
                 <li><strong>requirements</strong> field is removed and replaced by <strong>requirementCodes</strong> string[] field. Multiple requirements can now be added.</li>
-            </ul>            
+            </ul>
+            <li><strong class = 'uturn-strong'>V1.0.4</strong> :- </li>
+            <ul class = 'uturn-ul-style'>
+                <li>Added support for fetching <strong class = 'uturn-strong'><a href = '#operation/fetchShipmentPODsUsingGET'>Proof of delivery (POD)</a></strong> documens uploaded by carrier via API calls.</li>                
+            </ul>
         </ol>
       </div>",
     "contact": {
@@ -61,6 +65,7 @@
           "Shippers"
         ],
         "summary": "Assign a carrier to the shipment.",
+        "description": "Allowed Roles : Admin,User",
         "operationId": "assignShipmentToCarrierUsingPOST",
         "consumes": [
           "application/json"
@@ -112,6 +117,7 @@
           "Shippers"
         ],
         "summary": "Cancel a shipment in Uturn platform.",
+        "description": "Allowed Roles : Admin,User",
         "operationId": "cancelShipmentUsingPOST",
         "consumes": [
           "application/json"
@@ -171,6 +177,7 @@
           "Shippers"
         ],
         "summary": "Get all carrier details for a shipment.",
+        "description": "Allowed Roles : Admin,User",
         "operationId": "getCarrierContractUsingGET",
         "consumes": [
           "application/json"
@@ -224,6 +231,7 @@
           "Shippers"
         ],
         "summary": "Create a shipment.",
+        "description": "Allowed Roles : Admin,User",
         "operationId": "createShipmentUsingPOST",
         "consumes": [
           "application/json"
@@ -282,6 +290,7 @@
           "Shippers"
         ],
         "summary": "Get execution details of a shipment.",
+        "description": "Allowed Roles : Admin,User",
         "operationId": "getExecutionDetailsUsingGET",
         "consumes": [
           "application/json"
@@ -335,6 +344,7 @@
           "Shippers"
         ],
         "summary": "Get cost lines for a shipment.",
+        "description": "Allowed Roles : Admin,User",
         "operationId": "getCostLinesUsingGET",
         "consumes": [
           "application/json"
@@ -382,12 +392,73 @@
         }
       }
     },
+    "/shippers/pod/{shipmentNr}": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "summary": "Get POD of a shipment (base64)",
+        "description": "Allowed Roles : Admin,User",
+        "operationId": "fetchShipmentPODsUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "api_key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "description": "requestedBy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "description": "shipmentNr",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericDocument"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
     "/shippers/quotes/{shipmentNr}": {
       "get": {
         "tags": [
           "Shippers"
         ],
         "summary": "Get quotes for a shipment.",
+        "description": "Allowed Roles : Admin,User",
         "operationId": "getQuotesOnShipmentUsingGET",
         "consumes": [
           "application/json"
@@ -444,6 +515,7 @@
           "Shippers"
         ],
         "summary": "Get all metadata for a shipment.",
+        "description": "Allowed Roles : Admin,User",
         "operationId": "getShipmentMetaDataUsingGET",
         "consumes": [
           "application/json"
@@ -489,6 +561,7 @@
           "Shippers"
         ],
         "summary": "Update a shipment.",
+        "description": "Allowed Roles : Admin,User",
         "operationId": "updateShipmentUsingPOST",
         "consumes": [
           "application/json"
@@ -546,6 +619,7 @@
           "Shippers"
         ],
         "summary": "Withdraw a shipment from Uturn platform.Sets the status back to CONCEPT",
+        "description": "Allowed Roles : Admin,User",
         "operationId": "withdrawShipmentUsingPOST",
         "consumes": [
           "application/json"
@@ -647,13 +721,11 @@
           }
         },
         "cargoCardNumber": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": "CargoCard number of the carrier."
         },
         "eanNumber": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": "EAN number of the carrier."
         },
         "email": {
@@ -1011,6 +1083,30 @@
           "items": {
             "$ref": "#/definitions/TSOStatus"
           }
+        }
+      }
+    },
+    "GenericDocument": {
+      "type": "object",
+      "properties": {
+        "fullFileName": {
+          "type": "string",
+          "example": "70000000_POD_1.pdf",
+          "description": "Full name of the document with extension."
+        },
+        "fileName": {
+          "type": "string",
+          "example": "70000000_POD_1",
+          "description": "File name of the document"
+        },
+        "fileExtension": {
+          "type": "string",
+          "example": "pdf",
+          "description": "File extension of the document."
+        },
+        "fileInBase64format": {
+          "type": "string",
+          "description": "File in Base64 encoded format."
         }
       }
     },
