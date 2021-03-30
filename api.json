@@ -36,7 +36,7 @@
             </ul>
             <li><strong class = 'uturn-strong'>V1.0.4</strong> :- </li>
             <ul class = 'uturn-ul-style'>
-                <li>Added support for fetching <strong class = 'uturn-strong'><a href = '#operation/fetchShipmentPODsUsingGET'>Proof of delivery (POD)</a></strong> documens uploaded by carrier via API calls.</li>                
+                <li>Added support for fetching <strong class = 'uturn-strong'><a href = '#operation/fetchShipmentPODsUsingGET'>Proof of delivery (POD)</a></strong> documents uploaded by carrier via API calls.</li>                
             </ul>
         </ol>
       </div>",
