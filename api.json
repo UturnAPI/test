@@ -1388,6 +1388,11 @@
           "type": "string",
           "example": "4.4243",
           "description": "Longitude of the location. Required if creating new address in portal."
+        },
+        "uniqueLocationId": {
+          "type": "string",
+          "example": "My Unique identifier",
+          "description": "Unique location identifier from the shipper."
         }
       }
     },
