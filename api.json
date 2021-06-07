@@ -43,7 +43,26 @@
                 <li>Added support for uploading <strong class = 'uturn-strong'><a href = '#operation/uploadDocumentsToShipmentUsingPOST'>documents related to shipment</a></strong> via API calls.</li>                
             </ul>
         </ol>
-      </div>",
+      </div>
+      <br/>
+      <h1>Notifications</h1>
+      <div>Notifications (or webhooks) serve to specify a callback url that should be invoked when an event occurs. You can contact with UTURN support to enable callback notifications. The following event types are currently supported:</div>
+      <ul>
+      	<li>Arrived</li>
+      	<li>Departed</li>
+      </ul>
+      <div>When an event occurs, the callback will be invoked with the following data:</div>
+      <ul>
+      	<li>shipmentNumber: Uturn unique identifier of the shipment</li>
+      	<li>reference: Shipper reference</li>
+      	<li>equipmentId: Container number of the shipment</li>
+      	<li>notificationId: Event type</li>
+      </ul>
+      <div>Below is an example response body</div>
+      <pre>{ "shipmentNumber": 70017267, "reference": "RF87654321", "equipmentId": "SEGU9534433", "notificationId": "Arrived" }</pre>
+      <div>After receiving a notification, you need to GET the execution details in order to receive the latest data.
+	  <div>
+",
     "contact": {
       "name": "UTURN",
       "url": "https://www.uturn-now.com",
