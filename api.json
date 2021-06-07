@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.5",
+    "version": "1.0.6",
     "title": "Uturn API documentation",
     "x-logo": {
       "url": "https://portal.uturn-system.com/assets/images/logo_uturn.png",
