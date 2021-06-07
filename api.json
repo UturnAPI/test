@@ -59,7 +59,12 @@
       	<li>notificationId: Event type</li>
       </ul>
       <div>Below is an example response body</div>
-      <pre>{ "shipmentNumber": 70017267, "reference": "RF87654321", "equipmentId": "SEGU9534433", "notificationId": "Arrived" }</pre>
+      <pre>{ 
+	    'shipmentNumber': 70017267, 
+	    'reference': 'RF87654321', 
+	    'equipmentId': 'SEGU9534433', 
+	    'notificationId': 'Arrived' 
+      }</pre>
       <div>After receiving a notification, you need to GET the execution details in order to receive the latest data.
 	  <div>
 ",
