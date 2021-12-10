@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.7",
+    "version": "1.1.0",
     "title": "Uturn API documentation",
     "x-logo": {
       "url": "https://portal.uturn-system.com/assets/images/logo_uturn.png",
@@ -10,12 +10,12 @@
       "href": "https://uturn-now.com"
     },
     "termsOfService": "UTURN License",
-    "description" : "<div>
+    "description": "<div>
         <strong class = 'uturn-strong'>Release history</strong>
         <br><br>
         <ol>
           <li><strong class = 'uturn-strong'>V1.0.0</strong> :- Initial version</li>
-          <li><strong class = 'uturn-strong'>V1.0.1</strong> :- 
+          <li><strong class = 'uturn-strong'>V1.0.1</strong> :-
             <ul class = 'uturn-ul-style'>
               <li>Added support for <strong class = 'uturn-strong'><a href = '#operation/getQuotesOnShipmentUsingGET'>GET quotations</a></strong> on a shipment.</li>
               <li>Added support for <strong class = 'uturn-strong'><a href = '#operation/assignShipmentToCarrierUsingPOST'>Assign carrier</a></strong> to shipment based on quote amount.</li>
@@ -30,26 +30,30 @@
             </ul>
             <li><strong class = 'uturn-strong'>V1.0.3</strong> :- </li>
             <ul class = 'uturn-ul-style'>
-                <li>Updated <strong class = 'uturn-strong'><a href = '#operation/createShipmentUsingPOST'>POST Create a shipment</a></strong> and <strong class = 'uturn-strong'>POST Update a shipment</strong> API calls. 
+                <li>Updated <strong class = 'uturn-strong'><a href = '#operation/createShipmentUsingPOST'>POST Create a shipment</a></strong> and <strong class = 'uturn-strong'>POST Update a shipment</strong> API calls.
                 <li><strong>productCategory</strong> field is removed and replaced by <strong>cargoDescription</strong> string field</li>
                 <li><strong>requirements</strong> field is removed and replaced by <strong>requirementCodes</strong> string[] field. Multiple requirements can now be added.</li>
             </ul>
             <li><strong class = 'uturn-strong'>V1.0.4</strong> :- </li>
             <ul class = 'uturn-ul-style'>
-                <li>Added support for fetching <strong class = 'uturn-strong'><a href = '#operation/fetchShipmentPODsUsingGET'>Proof of delivery (POD)</a></strong> documents uploaded by carrier via API calls.</li>                
+                <li>Added support for fetching <strong class = 'uturn-strong'><a href = '#operation/fetchShipmentPODsUsingGET'>Proof of delivery (POD)</a></strong> documents uploaded by carrier via API calls.</li>
             </ul>
             <li><strong class = 'uturn-strong'>V1.0.5</strong> :- </li>
             <ul class = 'uturn-ul-style'>
-                <li>Added support for uploading <strong class = 'uturn-strong'><a href = '#operation/uploadDocumentsToShipmentUsingPOST'>documents related to shipment</a></strong> via API calls.</li>                
+                <li>Added support for uploading <strong class = 'uturn-strong'><a href = '#operation/uploadDocumentsToShipmentUsingPOST'>documents related to shipment</a></strong> via API calls.</li>
             </ul>
             <li><strong class = 'uturn-strong'>V1.0.6</strong> :- </li>
             <ul class = 'uturn-ul-style'>
-                <li>Added support for callback notifications.</li>                
+                <li>Added support for callback notifications.</li>
             </ul>
             <li><strong class = 'uturn-strong'>V1.0.7</strong> :- </li>
             <ul class = 'uturn-ul-style'>
-                <li>Added support for direct driver assignment.</li>                
-            </ul>			
+                <li>Added support for direct driver assignment.</li>
+            </ul>
+            <li><strong class = 'uturn-strong'>V1.1.0</strong> :- </li>
+            <ul class = 'uturn-ul-style'>
+                <li>Added carrier endpoints.</li>
+            </ul>
         </ol>
       </div>
       <br/>
@@ -67,12 +71,12 @@
       	<li>notificationId: Event type</li>
       </ul>
       <div>Below is an example response body</div>
-      <pre>{ 
-	      'shipmentNumber': 70017267, 
-	      'reference': 'RF87654321', 
-	      'equipmentId': 'SEGU9534433', 
-	      'notificationId': 'Arrived' 
-      }</pre>
+      <pre>{
+	      'shipmentNumber': 70017267,
+	      'reference': 'RF87654321',
+	      'equipmentId': 'SEGU9534433',
+	      'notificationId': 'Arrived'
+    }</pre>
       <div>After receiving a notification, you need to GET the execution details in order to receive the latest data.
 	  <div>
 ",
@@ -90,11 +94,279 @@
   "basePath": "/portal",
   "tags": [
     {
+      "name": "Carriers",
+      "description": "Carrier Endpoints"
+    },
+    {
       "name": "Shippers",
       "description": "Shipper Endpoints"
     }
   ],
   "paths": {
+    "/carriers/add-document/{shipmentNumber}": {
+      "post": {
+        "tags": [
+          "Carriers"
+        ],
+        "summary": "Add document",
+        "description": "Add document to a shipment",
+        "operationId": "addDocumentToShipmentUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "api_key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "document",
+            "description": "document",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GenericDocumentUploadCarrier"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "description": "requestedBy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipmentNumber",
+            "in": "path",
+            "description": "shipmentNumber",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/carriers/update-execution-details/{shipmentNumber}": {
+      "post": {
+        "tags": [
+          "Carriers"
+        ],
+        "summary": "Update execution details",
+        "description": "Send execution events related to the shipment.",
+        "operationId": "sendLocationEventUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "api_key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "locationEvent",
+            "description": "locationEvent",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LocationEvent"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "description": "requestedBy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipmentNumber",
+            "in": "path",
+            "description": "shipmentNumber",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/carriers/update-order/{shipmentNumber}": {
+      "post": {
+        "tags": [
+          "Carriers"
+        ],
+        "summary": "Update order",
+        "description": "Update container related order details for a shipment.",
+        "operationId": "updateShipmentByCarrierUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "api_key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "request",
+            "description": "request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateOrder"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "description": "requestedBy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipmentNumber",
+            "in": "path",
+            "description": "shipmentNumber",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/carriers/update-status/{shipmentNumber}": {
+      "post": {
+        "tags": [
+          "Carriers"
+        ],
+        "summary": "Update order status",
+        "description": "Start, stop, execute, or finish a shipment",
+        "operationId": "updateTransportStatusByCarrierUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "api_key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "description": "requestedBy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipmentNumber",
+            "in": "path",
+            "description": "shipmentNumber",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "transportUpdate",
+            "description": "transportUpdate",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransportUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
     "/shippers/assignCarrier": {
       "post": {
         "tags": [
@@ -118,13 +390,6 @@
             "type": "string"
           },
           {
-							
-			
-		   
-						 
-										   
-												  
-							 
             "in": "body",
             "name": "assignCarrierRequest",
             "description": "assignCarrierRequest",
@@ -199,15 +464,6 @@
             "required": true,
             "type": "integer",
             "format": "int32"
-										  
-							  
-					   
-							  
-			 
-		   
-		  
-					  
-				  
           }
         ],
         "responses": {
@@ -231,9 +487,6 @@
         "summary": "Get all carrier details for a shipment.",
         "description": "Allowed Roles : Admin,User",
         "operationId": "getCarrierContractUsingGET",
-			   
-		  
-					   
         "produces": [
           "*/*"
         ],
@@ -300,13 +553,6 @@
             "type": "string"
           },
           {
-							
-			
-		   
-						 
-							  
-									 
-							 
             "in": "body",
             "name": "request",
             "description": "request",
@@ -351,9 +597,6 @@
         "summary": "Get execution details of a shipment.",
         "description": "Allowed Roles : Admin,User",
         "operationId": "getExecutionDetailsUsingGET",
-			   
-		  
-					   
         "produces": [
           "*/*"
         ],
@@ -405,9 +648,6 @@
         "summary": "Get cost lines for a shipment.",
         "description": "Allowed Roles : Admin,User",
         "operationId": "getCostLinesUsingGET",
-			   
-		  
-					   
         "produces": [
           "*/*"
         ],
@@ -459,9 +699,6 @@
         "summary": "Get POD of a shipment (base64)",
         "description": "Allowed Roles : Admin,User",
         "operationId": "fetchShipmentPODsUsingGET",
-			   
-		  
-					   
         "produces": [
           "*/*"
         ],
@@ -519,9 +756,6 @@
         "summary": "Get quotes for a shipment.",
         "description": "Allowed Roles : Admin,User",
         "operationId": "getQuotesOnShipmentUsingGET",
-			   
-		  
-					   
         "produces": [
           "*/*"
         ],
@@ -576,9 +810,6 @@
         "summary": "Get all metadata for a shipment.",
         "description": "Allowed Roles : Admin,User",
         "operationId": "getShipmentMetaDataUsingGET",
-			   
-		  
-					   
         "produces": [
           "*/*"
         ],
@@ -637,13 +868,6 @@
             "type": "string"
           },
           {
-							
-			
-		   
-						 
-							  
-									 
-							 
             "in": "body",
             "name": "request",
             "description": "request",
@@ -702,13 +926,6 @@
             "type": "string"
           },
           {
-							
-			
-		   
-						 
-										 
-												
-							 
             "in": "body",
             "name": "documentUploadList",
             "description": "documentUploadList",
@@ -960,7 +1177,6 @@
           "type": "number",
           "example": 150.0,
           "description": "Amount of the cost line."
-		 
         },
         "approvedDate": {
           "type": "string",
@@ -994,11 +1210,6 @@
           "example": "NL0",
           "description": "The tax code of the cost line."
         },
-		  
-						
-						   
-						 
-																																													
         "totalAmount": {
           "type": "number",
           "example": 150.0,
@@ -1008,7 +1219,6 @@
           "type": "number",
           "example": 150.0,
           "description": "Vat amount of the cost line."
-	  
         }
       },
       "title": "CostLine"
@@ -1044,6 +1254,9 @@
     "CountryDTO": {
       "type": "object",
       "properties": {
+        "alphaTwoCode": {
+          "type": "string"
+        },
         "countryCode": {
           "type": "string"
         },
@@ -1121,31 +1334,11 @@
           "example": "FOTU1234567",
           "description": "The container number of the transport order.Should be 11 characters.First 3 characters should be letters.4th character should be U, J or Z and last 7 characters should be numbers.The format is in ISO 6346."
         },
-													  
-		  
-						 
-							
-						   
-																																																																									  
         "generatorSet": {
           "type": "boolean",
           "example": false,
           "description": "If TRUE a generator set will be required. If not filled, by default FALSE"
         },
-				   
-						   
-							
-																																																																																		
-		  
-				 
-						   
-							  
-																																														
-		  
-						
-							
-							
-						   
         "grossWeight": {
           "type": "integer",
           "format": "int32",
@@ -1226,48 +1419,11 @@
           "type": "string",
           "example": 1234,
           "description": "The four digit code identifying the type of hazardous goods. Required when hazardous"
-						 
-																																																																																																																			  
-		  
-				
-							
-						   
         },
         "vat": {
           "type": "boolean",
           "example": false,
           "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment. By default FALSE"
-																																																																																																		
-		  
-					 
-						  
-										   
-																																																																				  
-					
-							  
-							 
-		   
-		  
-						
-						   
-								
-													
-																																				
-		  
-						 
-						   
-								
-													
-																																																																									  
-		  
-							
-							
-						  
-																																																																																																			  
-		 
-	   
-		   
-	  
         }
       },
       "title": "GenericAPICreateShipment"
@@ -1337,16 +1493,6 @@
     "GenericDocument": {
       "type": "object",
       "properties": {
-		  
-					 
-						   
-									  
-													
-		  
-						  
-						   
-						   
-																																  
         "fileExtension": {
           "type": "string",
           "example": "pdf",
@@ -1396,48 +1542,62 @@
         "fileDescription": {
           "type": "string",
           "example": "Document for clearance",
-          "description": "Description of file. Max 30 characters"
+          "description": "Description of file. Max 30 characters."
         },
         "fileInBase64format": {
           "type": "string",
-          "description": "File in Base64 encoded format. Max up-loadable size 5MB."
+          "description": "File in Base64 encoded format. Max uploadable size 5MB."
         },
         "fileName": {
           "type": "string",
           "example": "test_file.pdf",
-          "description": "Full name of the document with extension.",
-          "enum": [
-            "bmp",
-            "csv",
-            "doc",
-            "docx",
-            "jpeg",
-            "jpg",
-            "pdf",
-            "png",
-            "tif",
-            "tiff",
-		   
-            "xls",
-            "xlsx"
-						   
-          ]
+          "description": "Full name of the document with extension. Allowed extensions: pdf, doc, docx, jpeg, jpg, png, tif, tiff, bmp, xls, xlsx, csv"
         },
         "fileType": {
           "type": "string",
+          "example": "POD",
           "description": "Code of the file type. Values can be retrieved from meta-data call."
-		  
-							
-						   
-											  
-																																				 
-		 
-	   
-		   
-	  
         }
       },
       "title": "GenericDocumentUpload"
+    },
+    "GenericDocumentUploadCarrier": {
+      "type": "object",
+      "required": [
+        "fileInBase64format",
+        "fileName",
+        "fileType"
+      ],
+      "properties": {
+        "fileDescription": {
+          "type": "string",
+          "example": "Proof of delivery",
+          "description": "Description of file. Max 30 characters."
+        },
+        "fileInBase64format": {
+          "type": "string",
+          "description": "File in Base64 encoded format. Max uploadable size 5MB."
+        },
+        "fileName": {
+          "type": "string",
+          "example": "test_file.pdf",
+          "description": "Full name of the document with extension. Allowed extensions: pdf, doc, docx, jpeg, jpg, png, tif, tiff, bmp, xls, xlsx, csv"
+        },
+        "fileType": {
+          "type": "string",
+          "example": "POD",
+          "description": "Code of the file type.",
+          "enum": [
+            "CUSTOMER_DOCUMENTS",
+            "INTERCHANGE",
+            "ISSUE_REPORT",
+            "POD",
+            "PROOF_COST",
+            "SHIPMENT_GENERAL"
+          ]
+        }
+      },
+      "title": "GenericDocumentUploadCarrier"
     },
     "InvoiceLineStatusDTO": {
       "type": "object",
@@ -1452,6 +1612,38 @@
         }
       },
       "title": "InvoiceLineStatusDTO"
+    },
+    "LocationEvent": {
+      "type": "object",
+      "required": [
+        "sequenceNumber",
+        "time",
+        "type"
+      ],
+      "properties": {
+        "sequenceNumber": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "Sequence number of the location action."
+        },
+        "time": {
+          "type": "string",
+          "example": "2021-08-11T13:34:58.80",
+          "description": "The format is in ISO 8601."
+        },
+        "type": {
+          "type": "string",
+          "example": "ARRIVAL",
+          "description": "Type of the event. Values are case sensitive.",
+          "enum": [
+            "ARRIVAL",
+            "DEPARTURE",
+            "ETA"
+          ]
+        }
+      },
+      "title": "LocationEvent"
     },
     "Requirement": {
       "type": "object",
@@ -1488,11 +1680,6 @@
     "TSOStatus": {
       "type": "object",
       "properties": {
-		  
-				 
-						   
-						  
-												  
         "code": {
           "type": "string",
           "example": "IP",
@@ -1551,26 +1738,9 @@
         "name"
       ],
       "properties": {
-		  
-				   
-						   
-								   
-																																	   
-		  
-						
-						   
-						  
-																																 
-		  
-					   
-						   
-							  
-																																														  
-		  
-				 
-						   
-								 
-																																										   
+        "bics": {
+          "type": "string"
+        },
         "city": {
           "type": "string",
           "example": "Rotterdam",
@@ -1644,12 +1814,6 @@
           "format": "date-time",
           "example": "2021-11-12T13:34",
           "description": "ETA for this location.The format is ISO-8601 local date"
-				  
-		   
-		  
-				 
-						   
-								
         },
         "from": {
           "type": "string",
@@ -1665,7 +1829,6 @@
           "type": "string",
           "example": "HOBART",
           "description": "Port name"
-								
         },
         "reference": {
           "type": "string",
@@ -1688,16 +1851,6 @@
           "$ref": "#/definitions/ShippingLine"
         },
         "stopType": {
-				 
-						   
-							  
-									
-		  
-						  
-						   
-								
-										
-																																																																												 
           "type": "string",
           "example": "Pick-up",
           "description": "Stop type",
@@ -1719,10 +1872,29 @@
           "type": "string",
           "example": "QUEEN ELIZABETH",
           "description": "Vessel name"
-	  
         }
       },
       "title": "TransportStop"
+    },
+    "TransportUpdate": {
+      "type": "object",
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "example": "START",
+          "description": "Set the action to be performed. START: start the shipment; STOP: stop the shipment; EXECUTE: Execute the shipment, for example when the shipment is executed, but no proof of delivery is available yet; FINISH: finish the shipment when a proof of delivery is uploaded. Values are case sensitive.",
+          "enum": [
+            "START",
+            "STOP",
+            "EXECUTE",
+            "FINISH"
+          ]
+        }
+      },
+      "title": "TransportUpdate"
     },
     "UpdateAPIShipment": {
       "type": "object",
@@ -1735,7 +1907,6 @@
           "type": "boolean",
           "example": false,
           "description": "If TRUE carriers can accept the shipment for the price. If FALSE, it is bid only.By default FALSE."
-																																											   
         },
         "cargoDescription": {
           "type": "string",
@@ -1760,31 +1931,11 @@
           "example": "FOTU1234567",
           "description": "The container number of the transport order.Should be 11 characters.First 3 characters should be letters.4th character should be U, J or Z and last 7 characters should be numbers."
         },
-													  
-		  
-						 
-							
-						   
-																																																																																																																																						  
         "generatorSet": {
           "type": "boolean",
           "example": false,
           "description": "If TRUE a generator set will be required. If not filled, by default FALSE.When updating and status is Carrier Assigned, the carrier first needs to approve the update request."
         },
-				   
-						   
-							
-																																																																																																																																													  
-		  
-				 
-						   
-							  
-																																														
-		  
-						
-							
-							
-						   
         "grossWeight": {
           "type": "integer",
           "format": "int32",
@@ -1846,12 +1997,10 @@
         "shipmentUnit": {
           "description": "The type of equipment that needs to be transported",
           "$ref": "#/definitions/EquipmentType"
-						   
         },
         "shippingLine": {
           "description": "The shipping line for this shipment used to make pre-announcements",
           "$ref": "#/definitions/ShippingLine"
-	   
         },
         "tareWeight": {
           "type": "integer",
@@ -1862,10 +2011,8 @@
         "transportStops": {
           "type": "array",
           "description": "Array of minimum 2 or more stops describing the stops required to execute the transport",
-		   
           "items": {
             "$ref": "#/definitions/TransportStop"
-						   
           }
         },
         "unCode": {
@@ -1878,11 +2025,36 @@
           "type": "boolean",
           "example": false,
           "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment.By default FALSE."
-	 
         }
       },
       "title": "UpdateAPIShipment"
+    },
+    "UpdateOrder": {
+      "type": "object",
+      "properties": {
+        "containerNumber": {
+          "type": "string",
+          "example": "FOTU1234567",
+          "description": "The container number of the transport order. The format is in ISO 6346."
+        },
+        "paymentReference": {
+          "type": "string",
+          "example": "PY125647",
+          "description": "Your custom reference number which will be visible on payment lines for this shipment."
+        },
+        "seal": {
+          "type": "string",
+          "example": "CN0622165",
+          "description": "The seal number of the shipment."
+        },
+        "tare": {
+          "type": "integer",
+          "format": "int32",
+          "example": 3810,
+          "description": "Tare value of the container in kg\u0027s."
+        }
+      },
+      "title": "UpdateOrder"
     }
   }
 }
-																												 
