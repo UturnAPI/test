@@ -1193,11 +1193,6 @@
           "example": "70013199 - Transport",
           "description": "Description of the cost line. Normally the shipment ID in combination with the cost type."
         },
-	"carrierComment": {
-          "type": "string",
-          "example": "I waited from 9:00 until 13:00 at unloading",
-          "description": "The carrier comment of the cost line."
-        },
         "invoiceNumber": {
           "type": "integer",
           "format": "int32",
@@ -1228,6 +1223,11 @@
           "type": "number",
           "example": 150.0,
           "description": "Vat amount of the cost line."
+        },
+	"carrierComment": {
+          "type": "string",
+          "example": "I waited from 9:00 until 13:00 at unloading",
+          "description": "The carrier comment of the cost line."
         }
       },
       "title": "CostLine"
