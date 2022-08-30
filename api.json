@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "title": "Uturn API documentation",
     "x-logo": {
       "url": "https://portal.uturn-system.com/assets/images/logo_uturn.png",
@@ -53,6 +53,10 @@
             <li><strong class = 'uturn-strong'>V1.1.0</strong> :- </li>
             <ul class = 'uturn-ul-style'>
                 <li>Added carrier endpoints.</li>
+            </ul>
+            <li><strong class = 'uturn-strong'>V1.1.1</strong> :- </li>
+            <ul class = 'uturn-ul-style'>
+                <li>Added carrier comment to cost lines.</li>
             </ul>
         </ol>
       </div>
@@ -1188,6 +1192,11 @@
           "type": "string",
           "example": "70013199 - Transport",
           "description": "Description of the cost line. Normally the shipment ID in combination with the cost type."
+        },
+	"carrierComment": {
+          "type": "string",
+          "example": "I waited from 9:00 until 13:00 at unloading",
+          "description": "The carrier comment of the cost line."
         },
         "invoiceNumber": {
           "type": "integer",
