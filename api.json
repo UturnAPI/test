@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "title": "Uturn API documentation",
     "x-logo": {
       "url": "https://portal.uturn-system.com/assets/images/logo_uturn.png",
@@ -59,6 +59,10 @@
                 <li>Added carrier comment to cost lines.</li>
             </ul>
             <li><strong class = 'uturn-strong'>V1.1.2</strong> :- </li>
+            <ul class = 'uturn-ul-style'>
+                <li>Ordered properties.</li>
+            </ul>
+            <li><strong class = 'uturn-strong'>V1.1.3</strong> :- </li>
             <ul class = 'uturn-ul-style'>
                 <li>Ordered properties.</li>
             </ul>
@@ -1894,16 +1898,97 @@
         "transportStops"
       ],
       "properties": {
-        "acceptancePrice": {
-          "type": "boolean",
-          "example": false,
-          "description": "If TRUE carriers can accept the shipment for the price. If FALSE, it is bid only.By default FALSE."
+        "shipmentNumber": {
+          "type": "integer",
+          "format": "int32",
+          "example": 70014195,
+          "description": "Shipment number. Not required during creation of shipment."
+        },
+        "shipmentUnit": {
+          "description": "The type of equipment that needs to be transported",
+          "$ref": "#/definitions/EquipmentType"
+        },
+        "tareWeight": {
+          "type": "integer",
+          "format": "int32",
+          "example": 3500,
+          "description": "The weight of the container"
+        },
+        "equipmentId": {
+          "type": "string",
+          "example": "FOTU1234567",
+          "description": "The container number of the transport order.Should be 11 characters.First 3 characters should be letters.4th character should be U, J or Z and last 7 characters should be numbers."
+        },
+        "shippingLine": {
+          "description": "The shipping line for this shipment used to make pre-announcements",
+          "$ref": "#/definitions/ShippingLine"
+        },
+        "seal": {
+          "type": "string",
+          "example": "ABC123",
+          "description": "Seal number of the equipment"
         },
         "cargoDescription": {
           "type": "string",
           "description": "The general description of goods that are in the container.",
           "minLength": 0,
           "maxLength": 400
+        },
+        "requirementCodes": {
+          "type": "array",
+          "example": [
+            "AC",
+            "OOG"
+          ],
+          "description": "The specific requirements for the transport. When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "remarks": {
+          "type": "string",
+          "example": "Driver should wear white socks",
+          "description": "Additional remarks for this shipment"
+        },
+        "unCode": {
+          "type": "string",
+          "example": 1234,
+          "description": "The four digit code identifying the type of hazardous goods. Required when hazardous.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+          "pattern": "^$|\\d{4}"
+        },
+        "generatorSet": {
+          "type": "boolean",
+          "example": false,
+          "description": "If TRUE a generator set will be required. If not filled, by default FALSE.When updating and status is Carrier Assigned, the carrier first needs to approve the update request."
+        },
+        "grossWeight": {
+          "type": "integer",
+          "format": "int32",
+          "example": 12000,
+          "description": "Weight to be loaded + tare weight of container.When updating and status is Carrier Assigned, the carrier first needs to approve the update request."
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32",
+          "example": 450,
+          "description": "Target price of the published transport, agreed price of the preferred carrier(s).Must be greater than 0.",
+          "minimum": 1,
+          "exclusiveMinimum": false
+        },
+        "vat": {
+          "type": "boolean",
+          "example": false,
+          "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment.By default FALSE."
+        },
+        "acceptancePrice": {
+          "type": "boolean",
+          "example": false,
+          "description": "If TRUE carriers can accept the shipment for the price. If FALSE, it is bid only.By default FALSE."
+        },
+        "invoiceReference": {
+          "type": "string",
+          "example": "Invoice52846",
+          "description": "Reference that will be used on the invoice."
         },
         "carriers": {
           "type": "array",
@@ -1917,35 +2002,6 @@
             "format": "int32"
           }
         },
-        "equipmentId": {
-          "type": "string",
-          "example": "FOTU1234567",
-          "description": "The container number of the transport order.Should be 11 characters.First 3 characters should be letters.4th character should be U, J or Z and last 7 characters should be numbers."
-        },
-        "generatorSet": {
-          "type": "boolean",
-          "example": false,
-          "description": "If TRUE a generator set will be required. If not filled, by default FALSE.When updating and status is Carrier Assigned, the carrier first needs to approve the update request."
-        },
-        "grossWeight": {
-          "type": "integer",
-          "format": "int32",
-          "example": 12000,
-          "description": "Weight to be loaded + tare weight of container.When updating and status is Carrier Assigned, the carrier first needs to approve the update request."
-        },
-        "invoiceReference": {
-          "type": "string",
-          "example": "Invoice52846",
-          "description": "Reference that will be used on the invoice."
-        },
-        "price": {
-          "type": "integer",
-          "format": "int32",
-          "example": 450,
-          "description": "Target price of the published transport, agreed price of the preferred carrier(s).Must be greater than 0.",
-          "minimum": 1,
-          "exclusiveMinimum": false
-        },
         "publishFrom": {
           "type": "string",
           "format": "date-time",
@@ -1958,64 +2014,12 @@
           "example": "2021-11-11T13:34:58.80+02:00",
           "description": "Date time to publish shipment until.The format is in ISO 8601"
         },
-        "remarks": {
-          "type": "string",
-          "example": "Driver should wear white socks",
-          "description": "Additional remarks for this shipment"
-        },
-        "requirementCodes": {
-          "type": "array",
-          "example": [
-            "AC",
-            "OOG"
-          ],
-          "description": "The specific requirements for the transport. When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
-          "items": {
-            "type": "string"
-          }
-        },
-        "seal": {
-          "type": "string",
-          "example": "ABC123",
-          "description": "Seal number of the equipment"
-        },
-        "shipmentNumber": {
-          "type": "integer",
-          "format": "int32",
-          "example": 70014195,
-          "description": "Shipment number. Not required during creation of shipment."
-        },
-        "shipmentUnit": {
-          "description": "The type of equipment that needs to be transported",
-          "$ref": "#/definitions/EquipmentType"
-        },
-        "shippingLine": {
-          "description": "The shipping line for this shipment used to make pre-announcements",
-          "$ref": "#/definitions/ShippingLine"
-        },
-        "tareWeight": {
-          "type": "integer",
-          "format": "int32",
-          "example": 3500,
-          "description": "The weight of the container"
-        },
         "transportStops": {
           "type": "array",
           "description": "Array of minimum 2 or more stops describing the stops required to execute the transport",
           "items": {
             "$ref": "#/definitions/TransportStop"
           }
-        },
-        "unCode": {
-          "type": "string",
-          "example": 1234,
-          "description": "The four digit code identifying the type of hazardous goods. Required when hazardous.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
-          "pattern": "^$|\\d{4}"
-        },
-        "vat": {
-          "type": "boolean",
-          "example": false,
-          "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment.By default FALSE."
         }
       },
       "title": "UpdateAPIShipment"
