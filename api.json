@@ -1867,24 +1867,6 @@
           "type": "string",
           "example": "QUEEN ELIZABETH",
           "description": "Vessel name"
-        },
-        "actualArrival": {
-          "type": "string",
-          "format": "date-time",
-          "example": "2021-11-12T13:34",
-          "description": "Actual arrival of carrier for this location.The format is ISO-8601 local date"
-        },
-        "actualDeparture": {
-          "type": "string",
-          "format": "date-time",
-          "example": "2021-11-12T13:34",
-          "description": "Actual departure of carrier for this location.The format is ISO-8601 local date"
-        },
-        "eta": {
-          "type": "string",
-          "format": "date-time",
-          "example": "2021-11-12T13:34",
-          "description": "ETA for this location.The format is ISO-8601 local date"
         }
       },
       "title": "TransportStop"
