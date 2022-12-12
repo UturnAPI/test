@@ -122,7 +122,7 @@
     }
   ],
   "paths": {
-    "/portal/carriers/add-document/{shipmentNumber}": {
+    "/carriers/add-document/{shipmentNumber}": {
       "post": {
         "tags": [
           "Carriers"
@@ -188,7 +188,7 @@
         }
       }
     },
-    "/portal/carriers/update-execution-details/{shipmentNumber}": {
+    "/carriers/update-execution-details/{shipmentNumber}": {
       "post": {
         "tags": [
           "Carriers"
@@ -254,7 +254,7 @@
         }
       }
     },
-    "/portal/carriers/update-order/{shipmentNumber}": {
+    "/carriers/update-order/{shipmentNumber}": {
       "post": {
         "tags": [
           "Carriers"
@@ -320,7 +320,7 @@
         }
       }
     },
-    "/portal/carriers/update-status/{shipmentNumber}": {
+    "/carriers/update-status/{shipmentNumber}": {
       "post": {
         "tags": [
           "Carriers"
@@ -386,7 +386,7 @@
         }
       }
     },
-    "/portal/shippers/assignCarrier": {
+    "/shippers/assignCarrier": {
       "post": {
         "tags": [
           "Shippers"
@@ -438,7 +438,7 @@
         }
       }
     },
-    "/portal/shippers/cancel/{shipmentNr}": {
+    "/shippers/cancel/{shipmentNr}": {
       "post": {
         "tags": [
           "Shippers"
@@ -498,7 +498,7 @@
         }
       }
     },
-    "/portal/shippers/carrierContract/{shipmentNr}": {
+    "/shippers/carrierContract/{shipmentNr}": {
       "get": {
         "tags": [
           "Shippers"
@@ -549,7 +549,7 @@
         }
       }
     },
-    "/portal/shippers/create": {
+    "/shippers/create": {
       "post": {
         "tags": [
           "Shippers"
@@ -608,7 +608,7 @@
         }
       }
     },
-    "/portal/shippers/executionDetails/{shipmentNr}": {
+    "/shippers/executionDetails/{shipmentNr}": {
       "get": {
         "tags": [
           "Shippers"
@@ -660,7 +660,7 @@
         "deprecated": true
       }
     },
-    "/portal/shippers/invoiceLines/{shipmentNr}": {
+    "/shippers/invoiceLines/{shipmentNr}": {
       "get": {
         "tags": [
           "Shippers"
@@ -711,7 +711,7 @@
         }
       }
     },
-    "/portal/shippers/pod/{shipmentNr}": {
+    "/shippers/pod/{shipmentNr}": {
       "get": {
         "tags": [
           "Shippers"
@@ -768,7 +768,7 @@
         }
       }
     },
-    "/portal/shippers/quotes/{shipmentNr}": {
+    "/shippers/quotes/{shipmentNr}": {
       "get": {
         "tags": [
           "Shippers"
@@ -822,7 +822,7 @@
         }
       }
     },
-    "/portal/shippers/shipment/details/{shipmentNr}": {
+    "/shippers/shipment/details/{shipmentNr}": {
       "get": {
         "tags": [
           "Shippers"
@@ -876,7 +876,7 @@
         }
       }
     },
-    "/portal/shippers/shipment/metaData": {
+    "/shippers/shipment/metaData": {
       "get": {
         "tags": [
           "Shippers"
@@ -919,7 +919,7 @@
         }
       }
     },
-    "/portal/shippers/update": {
+    "/shippers/update": {
       "post": {
         "tags": [
           "Shippers"
@@ -977,7 +977,7 @@
         }
       }
     },
-    "/portal/shippers/uploadDocuments/{shipmentNr}": {
+    "/shippers/uploadDocuments/{shipmentNr}": {
       "post": {
         "tags": [
           "Shippers"
@@ -1046,7 +1046,7 @@
         }
       }
     },
-    "/portal/shippers/withdraw/{shipmentNr}": {
+    "/shippers/withdraw/{shipmentNr}": {
       "post": {
         "tags": [
           "Shippers"
