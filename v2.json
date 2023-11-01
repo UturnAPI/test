@@ -1,0 +1,4603 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "UTURN API Documentation",
+    "termsOfService": "https://www.uturn-now.com",
+    "contact": {
+      "name": "Uturn",
+      "url": "https://www.uturn-now.com",
+      "email": "admin@uturn-now.com"
+    },
+    "license": {
+      "name": "UTURN License",
+      "url": "/portal/license"
+    },
+    "version": "Version"
+  },
+  "servers": [
+    {
+      "url": "http://api.uturn-system.com/portal",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "api_key": []
+    },
+    {
+      "Authorization": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Shippers",
+      "description": "Shipment Endpoints for shipper"
+    },
+    {
+      "name": "Carriers",
+      "description": "Methods for carriers."
+    },
+    {
+      "name": "Shippers",
+      "description": "Methods for shippers."
+    }
+  ],
+  "paths": {
+    "/v2/shippers/withdraw/{shipmentNr}": {
+      "post": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Withdraw a shipment from Uturn platform.Sets the status back to CONCEPT Allowed Roles : Admin,User",
+        "operationId": "withdrawShipment",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/uploadDocuments/{shipmentNr}": {
+      "post": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Upload (base64) documents to the shipment. Allowed Roles : Admin,User",
+        "operationId": "uploadDocumentsToShipment",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GenericDocumentUpload"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Files uploaded successfully.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/update": {
+      "post": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Update a shipment. Allowed Roles : Admin,User",
+        "operationId": "updateShipment",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAPIShipment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/create": {
+      "post": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Create a shipment. Allowed Roles : Admin,User",
+        "operationId": "createShipment",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericAPICreateShipment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/cancel/{shipmentNr}": {
+      "post": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Cancel a shipment in Uturn platform. Allowed Roles : Admin,User",
+        "operationId": "cancelShipment",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/callbackUrl": {
+      "post": {
+        "tags": [
+          "Shippers"
+        ],
+        "summary": "Register callback url",
+        "description": "This operation register a callback url that should be invoked when an event occurs.The following event types are currently supported:\n\n**Event types :**\n- `Arrived` \n- `Departed`\n- `ShipmentStatusUpdate`\n- `ContainerUpdate`\n- `ETAUpdate`\n\n**When an event occurs, the callback will be invoked with the following data:**\n- `shipmentNumber: ` Uturn unique identifier of the shipment.\n- `reference: ` Shipper reference.\n- `equipmentId: ` Container number of the shipment.\n- `notificationId: ` Event type.\n\n**After receiving a notification, you need to GET the shipment details in order to receive the latest data.**",
+        "operationId": "registerCallBackUrl",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CallbackConfigRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "FAILED"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "FAILED"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User/organisation not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "FAILED"
+                  ]
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/assignCarrier": {
+      "post": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Assign a carrier to the shipment. Allowed Roles : Admin,User",
+        "operationId": "assignShipmentToCarrier",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignCarrierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/price-calculator/request-price": {
+      "post": {
+        "tags": [
+          "PriceCalculator"
+        ],
+        "description": "request a price. Allowed Roles : Shipper",
+        "operationId": "requestPrice",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestPriceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestPriceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestPriceResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestPriceResponse"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestPriceResponse"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/distance-route": {
+      "post": {
+        "tags": [
+          "Distance and routes related details"
+        ],
+        "description": "Fetch routes from 4Shipping API",
+        "operationId": "fetchDistanceAndRouteDetails",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FourShippingRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteDetailsDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/carriers/update-status/{shipmentNumber}": {
+      "post": {
+        "tags": [
+          "Carriers"
+        ],
+        "description": "Update order status. Start, stop, execute, or finish a shipment",
+        "operationId": "updateTransportStatusByCarrier",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/carriers/update-order/{shipmentNumber}": {
+      "post": {
+        "tags": [
+          "Carriers"
+        ],
+        "description": "Update order. Update container related order details for a shipment.",
+        "operationId": "updateShipmentByCarrier",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrder"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/carriers/update-execution-details/{shipmentNumber}": {
+      "post": {
+        "tags": [
+          "Carriers"
+        ],
+        "description": "Update execution details. Send execution events related to the shipment.",
+        "operationId": "sendLocationEvent",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationEvent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/carriers/callbackUrl": {
+      "post": {
+        "tags": [
+          "Carriers"
+        ],
+        "summary": "Register callback url",
+        "description": "This operation register a callback url that should be invoked when an event occurs.\n\nThe callback will be invoked with the following data:\n- `shipmentNumber: ` Uturn unique identifier of the shipment.\n- `shipmentUnit: ` The type of equipment that needs to be transported.\n- `equipmentId: ` The container number of the transport order.Should be 11 characters.First 3 characters should be letters.            \"4th character should be U, J or Z and last 7 characters should be numbers. The format is in ISO 6346.\n- `tareWeight: ` The weight of the container.\n- `generatorSet: ` If TRUE a generator set will be required. If not filled, by default FALSE.\n- `shippingLine: ` The shipping line for this shipment used to make pre-announcements.\n- `unCode: ` The four digit code identifying the type of hazardous goods. Required when hazardous.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.\n- `seal: ` Seal number of the equipment.\n- `grossWeight: ` Weight to be loaded + tare weight of container.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.\n- `cargoDescription: ` The general description of goods that are in the container.\n- `requirementCodes: ` The specific requirements for the transport. When updating and status is Carrier Assigned, the carrier first needs to approve the update request.,example = ['AC', 'OOG'].\n- `remarks: ` Additional remarks for this shipment.\n- `transportStops: ` Array of minimum 2 or more stops describing the stops required to execute the transport.\n- `vat: ` If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment.By default FALSE.\n- `shipper: ` The shipper.\n- `distance: ` Estimated distance for shipment route.\n- `contract: ` Agreed Price.",
+        "operationId": "registerCallBackUrl_1",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CallbackConfigRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "FAILED"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "FAILED"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User/organisation not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "FAILED"
+                  ]
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/carriers/add-document/{shipmentNumber}": {
+      "post": {
+        "tags": [
+          "Carriers"
+        ],
+        "description": "Add document. Add document to a shipment",
+        "operationId": "addDocumentToShipment",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericDocumentUploadCarrier"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/shipment/metaData": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Get all metadata for a shipment. Allowed Roles : Admin,User",
+        "operationId": "getShipmentMetaData",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericAPIShipmentMetaData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericAPIShipmentMetaData"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericAPIShipmentMetaData"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/shipment/details/{shipmentNr}": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Get shipment details. Allowed Roles : Admin,User",
+        "operationId": "fetchShipmentDetails",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIShipmentDetailsDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIShipmentDetailsDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIShipmentDetailsDTO"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/quotes/{shipmentNr}": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Get quotes for a shipment. Allowed Roles : Admin,User",
+        "operationId": "getQuotesOnShipment",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarrierQuote"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarrierQuote"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarrierQuote"
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/pod/{shipmentNr}": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Get POD of a shipment (base64). Allowed Roles : Admin,User",
+        "operationId": "fetchShipmentPODs",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GenericDocument"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GenericDocument"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GenericDocument"
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/invoiceLines/{shipmentNr}": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Get cost lines for a shipment. Allowed Roles : Admin,User",
+        "operationId": "getCostLines",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostLines"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostLines"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostLines"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shippers/executionDetails/{shipmentNr}": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Get execution details of a shipment. Allowed Roles : Admin,User",
+        "operationId": "getExecutionDetails",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportExecutionDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportExecutionDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportExecutionDetails"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/v2/shippers/carrierContract/{shipmentNr}": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Get all carrier details for a shipment. Allowed Roles : Admin,User",
+        "operationId": "getCarrierContract",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipmentNr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarrierContract"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarrierContract"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarrierContract"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shipper/shipments": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "description": "Get shipment list for shipper user",
+        "operationId": "getShipments",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Zero-based page index (0..N)",
+              "default": "0"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "maximum": 200,
+              "type": "string",
+              "description": "The size of the page to be returned",
+              "default": "50"
+            }
+          },
+          {
+            "name": "viewType",
+            "in": "query",
+            "description": "Type of list view",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "OPEN",
+                "ASSIGNED",
+                "HISTORY"
+              ]
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Specifies the field to sort by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SHIPMENT_NUMBER"
+              ]
+            }
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "description": "Specifies the sorting order",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          },
+          {
+            "name": "filter.transportTypes",
+            "in": "query",
+            "description": "List of transport types",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "IMPORT",
+                  "EXPORT",
+                  "SHUNT",
+                  "OTHER"
+                ]
+              }
+            }
+          },
+          {
+            "name": "filter.containerSizes",
+            "in": "query",
+            "description": "List of container sizes",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "UNKNOWN",
+                  "SIZE_20FT",
+                  "SIZE_30FT",
+                  "SIZE_40FT",
+                  "SIZE_45FT",
+                  "OTHER"
+                ]
+              }
+            }
+          },
+          {
+            "name": "filter.fromDateTime",
+            "in": "query",
+            "description": "The format is ISO-8601 UTC timezone",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2023-01-12T13:30:00.000Z"
+          },
+          {
+            "name": "filter.untilDateTime",
+            "in": "query",
+            "description": "The format is ISO-8601 UTC timezone",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2023-01-24T13:34:00.000Z"
+          },
+          {
+            "name": "filter.statuses",
+            "in": "query",
+            "description": "shipment status",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "UNKNOWN",
+                  "PUBLISHED",
+                  "QUOTED",
+                  "CARRIER_ASSIGNED",
+                  "EXECUTED",
+                  "COMPLETED",
+                  "CANCELLED",
+                  "CONCEPT"
+                ]
+              }
+            }
+          },
+          {
+            "name": "filter.countries",
+            "in": "query",
+            "description": "ISO 3166-1 alpha-2 letter country code",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filter.userIds",
+            "in": "query",
+            "description": "shipper user id",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "name": "filter.requirements",
+            "in": "query",
+            "description": "requirement code",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filter.shippingLines",
+            "in": "query",
+            "description": "shipping line code",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageableResponseShipmentListDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/shipper/shipments/{shipmentNumber}": {
+      "get": {
+        "tags": [
+          "Shippers"
+        ],
+        "operationId": "getShipment",
+        "parameters": [
+          {
+            "name": "shipmentNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/price-calculator/pc-subscription": {
+      "get": {
+        "tags": [
+          "PriceCalculator"
+        ],
+        "description": "Get price calculator subscription info. Allowed Roles : Shipper",
+        "operationId": "getPCSubscriptionInfo",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestedBy",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceCalculatorSubscription"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Request.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceCalculatorSubscription"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceCalculatorSubscription"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceCalculatorSubscription"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "GenericDocumentUpload": {
+        "required": [
+          "fileInBase64format",
+          "fileName",
+          "fileType"
+        ],
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "description": "Full name of the document with extension. Allowed extensions: pdf, doc, docx, jpeg, jpg, png, tif, tiff, bmp, xls, xlsx, csv",
+            "example": "test_file.pdf"
+          },
+          "fileType": {
+            "type": "string",
+            "description": "Code of the file type. Values can be retrieved from meta-data call.",
+            "example": "POD"
+          },
+          "fileInBase64format": {
+            "type": "string",
+            "description": "File in Base64 encoded format. Max uploadable size 5MB."
+          },
+          "fileDescription": {
+            "type": "string",
+            "description": "Description of file. Max 30 characters.",
+            "example": "Document for clearance"
+          }
+        }
+      },
+      "EquipmentType": {
+        "required": [
+          "isoCode"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "The description of the container type",
+            "example": "45FT Dry"
+          },
+          "isoCode": {
+            "type": "string",
+            "description": "The ISO-code of the container.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "example": "LEG1"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "description": "The type of equipment that needs to be transported"
+      },
+      "ShippingLine": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the shipping line",
+            "example": "CMA-CGM"
+          },
+          "code": {
+            "type": "string",
+            "description": "The SCAC-code of the shipping line (code list can be retrieved in GetMetadata)",
+            "example": "CMDU"
+          }
+        },
+        "description": "The shipping line for this stop to make pre-announcements, if it's different than the one specified in shipment"
+      },
+      "TransportLocation": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the location, which will be used to map the location in UTURN",
+            "example": "Terminal Barendrecht"
+          },
+          "street": {
+            "type": "string",
+            "description": "Name of the street. Required if creating new address in portal.",
+            "example": "Bazenstraat"
+          },
+          "houseNumber": {
+            "type": "string",
+            "description": "Address number. Required if creating new address in portal.",
+            "example": "15"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal code. Required if creating new address in portal.",
+            "example": "4444AB"
+          },
+          "city": {
+            "type": "string",
+            "description": "City. Required if creating new address in portal.",
+            "example": "Rotterdam"
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "Country code based on ISO 3 letter code. Required if creating new address in portal.",
+            "example": "NLD"
+          },
+          "lat": {
+            "type": "string",
+            "description": "Latitude of the location. Required if creating new address in portal.",
+            "example": "50.0821"
+          },
+          "lon": {
+            "type": "string",
+            "description": "Longitude of the location. Required if creating new address in portal.",
+            "example": "4.4243"
+          },
+          "uniqueLocationId": {
+            "type": "string",
+            "description": "Unique location identifier from the shipper.",
+            "example": "My Unique identifier"
+          },
+          "bics": {
+            "type": "string"
+          },
+          "locationId": {
+            "type": "integer",
+            "description": "location id from the uturn. Can be fetched from get shipment details call.",
+            "format": "int32",
+            "example": 234545
+          },
+          "placeId": {
+            "type": "string",
+            "description": "Google Unique location identifier. Can be fetched from get shipment details call.",
+            "example": "weorvjwerkjsdlkf"
+          }
+        },
+        "description": "The location of the stop.Address details (street, houseNumber, city etc.) are only needed when the location is unknown, Google Maps API will be used to determine the exact location.When updating and status is Carrier Assigned, the carrier first needs to approve the update request."
+      },
+      "TransportStop": {
+        "required": [
+          "location",
+          "sequenceNumber",
+          "stopType"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Stop id from Uturn. Can be fetched from get shipment details call.",
+            "format": "int32",
+            "example": 165056
+          },
+          "sequenceNumber": {
+            "type": "integer",
+            "description": "The execution order of this stop in the transport",
+            "format": "int32",
+            "example": 1
+          },
+          "location": {
+            "$ref": "#/components/schemas/TransportLocation"
+          },
+          "stopType": {
+            "type": "string",
+            "description": "Stop type",
+            "example": "Pick-up",
+            "enum": [
+              "Pick-up, Load, Deliver, Drop, Stop"
+            ]
+          },
+          "from": {
+            "type": "string",
+            "description": "Start of window for this location.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "format": "date-time"
+          },
+          "until": {
+            "type": "string",
+            "description": "End of window for this location.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "format": "date-time"
+          },
+          "reference": {
+            "type": "string",
+            "description": "Reference needed to interact with the location",
+            "example": "ABC12584"
+          },
+          "remarks": {
+            "type": "string",
+            "description": "Additional instructions for the carrier for this location",
+            "example": "Report at the blue gate"
+          },
+          "shippingLine": {
+            "$ref": "#/components/schemas/ShippingLine"
+          },
+          "vesselName": {
+            "type": "string",
+            "description": "Vessel name",
+            "example": "QUEEN ELIZABETH"
+          },
+          "port": {
+            "type": "string",
+            "description": "Port name",
+            "example": "HOBART"
+          },
+          "actualArrival": {
+            "type": "string",
+            "description": "Actual arrival of carrier for this location.The format is ISO-8601 local date",
+            "format": "date-time"
+          },
+          "actualDeparture": {
+            "type": "string",
+            "description": "Actual departure of carrier for this location.The format is ISO-8601 local date",
+            "format": "date-time"
+          },
+          "eta": {
+            "type": "string",
+            "description": "ETA for this location.The format is ISO-8601 local date",
+            "format": "date-time"
+          },
+          "customerName": {
+            "type": "string",
+            "description": "The customer name for a location."
+          }
+        },
+        "description": "Array of minimum 2 or more stops describing the stops required to execute the transport"
+      },
+      "UpdateAPIShipment": {
+        "required": [
+          "grossWeight",
+          "shipmentNumber",
+          "shipmentUnit",
+          "transportStops"
+        ],
+        "type": "object",
+        "properties": {
+          "shipmentNumber": {
+            "type": "integer",
+            "description": "Shipment number. Not required during creation of shipment.",
+            "format": "int32",
+            "example": 70014195
+          },
+          "shipmentUnit": {
+            "$ref": "#/components/schemas/EquipmentType"
+          },
+          "equipmentId": {
+            "type": "string",
+            "description": "The container number of the transport order.Should be 11 characters.First 3 characters should be letters.4th character should be U, J or Z and last 7 characters should be numbers. The format is in ISO 6346.",
+            "example": "FOTU1234567"
+          },
+          "tareWeight": {
+            "type": "integer",
+            "description": "The weight of the container",
+            "format": "int32",
+            "example": 3500
+          },
+          "generatorSet": {
+            "type": "boolean",
+            "description": "If TRUE a generator set will be required. If not filled, by default FALSE.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "example": false
+          },
+          "shippingLine": {
+            "$ref": "#/components/schemas/ShippingLine"
+          },
+          "unCode": {
+            "pattern": "^$|\\d{4}",
+            "type": "string",
+            "description": "The four digit code identifying the type of hazardous goods. Required when hazardous.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "example": "1234"
+          },
+          "seal": {
+            "type": "string",
+            "description": "Seal number of the equipment",
+            "example": "ABC123"
+          },
+          "grossWeight": {
+            "type": "integer",
+            "description": "Weight to be loaded + tare weight of container.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "format": "int32",
+            "example": 12000
+          },
+          "cargoDescription": {
+            "maxLength": 400,
+            "minLength": 0,
+            "type": "string",
+            "description": "The general description of goods that are in the container."
+          },
+          "requirementCodes": {
+            "type": "array",
+            "description": "The specific requirements for the transport. When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "example": "['AC', 'OOG']",
+            "items": {
+              "type": "string",
+              "description": "The specific requirements for the transport. When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+              "example": "['AC', 'OOG']"
+            }
+          },
+          "remarks": {
+            "type": "string",
+            "description": "Additional remarks for this shipment",
+            "example": "Driver should wear white socks"
+          },
+          "transportStops": {
+            "maxItems": 2147483647,
+            "minItems": 2,
+            "type": "array",
+            "description": "Array of minimum 2 or more stops describing the stops required to execute the transport",
+            "items": {
+              "$ref": "#/components/schemas/TransportStop"
+            }
+          },
+          "invoiceReference": {
+            "type": "string",
+            "description": "Reference that will be used on the invoice.",
+            "example": "Invoice52846"
+          },
+          "price": {
+            "type": "integer",
+            "description": "Target price of the published transport, agreed price of the preferred carrier(s).Must be greater than 0.",
+            "format": "int32",
+            "example": 450
+          },
+          "vat": {
+            "type": "boolean",
+            "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment.By default FALSE.",
+            "example": false
+          },
+          "acceptancePrice": {
+            "type": "boolean",
+            "description": "If TRUE carriers can accept the shipment for the price. If FALSE, it is bid only.By default FALSE.",
+            "example": false
+          },
+          "carriers": {
+            "type": "array",
+            "description": "List of preferred carriers for this shipment. If empty, the shipment is published on the market.",
+            "example": [
+              10000872,
+              10000873
+            ],
+            "items": {
+              "type": "integer",
+              "description": "List of preferred carriers for this shipment. If empty, the shipment is published on the market.",
+              "format": "int32"
+            }
+          },
+          "publishFrom": {
+            "type": "string",
+            "description": "Date time to publish shipment from.The format is in ISO 8601",
+            "format": "date-time",
+            "example": "2021-11-11T13:34:58.8+02:00"
+          },
+          "publishUntil": {
+            "type": "string",
+            "description": "Date time to publish shipment until.The format is in ISO 8601",
+            "format": "date-time",
+            "example": "2021-11-11T13:34:58.8+02:00"
+          }
+        }
+      },
+      "GenericAPICreateShipment": {
+        "required": [
+          "grossWeight",
+          "shipmentUnit",
+          "transportStops"
+        ],
+        "type": "object",
+        "properties": {
+          "shipmentUnit": {
+            "$ref": "#/components/schemas/EquipmentType"
+          },
+          "equipmentId": {
+            "type": "string",
+            "description": "The container number of the transport order.Should be 11 characters.First 3 characters should be letters.4th character should be U, J or Z and last 7 characters should be numbers.The format is in ISO 6346.",
+            "example": "FOTU1234567"
+          },
+          "tareWeight": {
+            "type": "integer",
+            "description": "The weight of the container",
+            "format": "int32",
+            "example": 3500
+          },
+          "generatorSet": {
+            "type": "boolean",
+            "description": "If TRUE a generator set will be required. If not filled, by default FALSE",
+            "example": false,
+            "enum": [
+              false
+            ]
+          },
+          "shippingLine": {
+            "$ref": "#/components/schemas/ShippingLine"
+          },
+          "unCode": {
+            "type": "string",
+            "description": "The four digit code identifying the type of hazardous goods. Required when hazardous",
+            "example": "1234"
+          },
+          "seal": {
+            "type": "string",
+            "description": "Seal number of the equipment",
+            "example": "ABC123"
+          },
+          "grossWeight": {
+            "type": "integer",
+            "description": "Weight to be loaded + tare weight of container",
+            "format": "int32",
+            "example": 12000
+          },
+          "cargoDescription": {
+            "maxLength": 400,
+            "minLength": 0,
+            "type": "string",
+            "description": "The type of goods that are in the container"
+          },
+          "requirementCodes": {
+            "type": "array",
+            "description": "The specific requirements for the transport.",
+            "example": "['AC', 'OOG']",
+            "items": {
+              "type": "string",
+              "description": "The specific requirements for the transport.",
+              "example": "['AC', 'OOG']"
+            }
+          },
+          "remarks": {
+            "type": "string",
+            "description": "Additional remarks for this shipment",
+            "example": "Driver should wear white socks"
+          },
+          "transportStops": {
+            "type": "array",
+            "description": "Array of minimum 2 or more stops describing the stops required to execute the transport",
+            "items": {
+              "$ref": "#/components/schemas/TransportStop"
+            }
+          },
+          "invoiceReference": {
+            "type": "string",
+            "description": "Reference that will be used on the invoice.",
+            "example": "Invoice52846"
+          },
+          "price": {
+            "type": "integer",
+            "description": "Target price of the published transport, agreed price of the preferred carrier(s).Must be greater than 0.",
+            "format": "int32",
+            "example": 450
+          },
+          "vat": {
+            "type": "boolean",
+            "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment. By default FALSE",
+            "example": false,
+            "enum": [
+              false
+            ]
+          },
+          "acceptancePrice": {
+            "type": "boolean",
+            "description": "If TRUE carriers can accept the shipment for the price. If FALSE, it is bid only. If not filled, by default FALSE",
+            "example": true,
+            "enum": [
+              false
+            ]
+          },
+          "carriers": {
+            "type": "array",
+            "description": "List of preferred carriers for this shipment. If empty, the shipment is published on the market.",
+            "example": [
+              10000872,
+              10000873
+            ],
+            "items": {
+              "type": "integer",
+              "description": "List of preferred carriers for this shipment. If empty, the shipment is published on the market.",
+              "format": "int32"
+            }
+          },
+          "publishFrom": {
+            "type": "string",
+            "description": "If not filled, by default current date time.The format is in ISO 8601",
+            "format": "date-time",
+            "example": "2021-11-11T13:34:58.8+02:00"
+          },
+          "publishUntil": {
+            "type": "string",
+            "description": "If not filled, by default stop1 Until Date time.The format is in ISO 8601",
+            "format": "date-time",
+            "example": "2021-11-11T13:34:58.8+02:00"
+          },
+          "publishShipment": {
+            "type": "boolean",
+            "description": "If present and true shipment will published after creation.If not present or false shipment will created as concept.",
+            "example": true,
+            "enum": [
+              false
+            ]
+          },
+          "driverToAssign": {
+            "type": "string",
+            "description": "Email of driver if you want to assign the shipment directly to.",
+            "example": "driver@example.com"
+          }
+        }
+      },
+      "CallbackConfigRequest": {
+        "required": [
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Callback url to be invoked when an event occurs."
+          },
+          "headerName": {
+            "type": "string",
+            "description": "The property name to be set in header."
+          },
+          "headerValue": {
+            "type": "string",
+            "description": "The value of header property! "
+          }
+        }
+      },
+      "AssignCarrierRequest": {
+        "type": "object",
+        "properties": {
+          "quoteId": {
+            "type": "integer",
+            "description": "ID of the quoted price. This ID is used to assign a carrier to a shipment.",
+            "format": "int32",
+            "example": 3826
+          },
+          "shipmentNr": {
+            "type": "integer",
+            "description": "Shipment number to be assigned",
+            "format": "int32",
+            "example": 70015066
+          }
+        }
+      },
+      "PriceCalculatorLocation": {
+        "required": [
+          "countryCode",
+          "postalCode"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the location"
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "The ALPHA-3 code of the country",
+            "example": "NLD"
+          },
+          "city": {
+            "type": "string",
+            "description": "The name of city"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "The postal code",
+            "example": "3029 AK"
+          },
+          "street": {
+            "type": "string",
+            "description": "The name of street"
+          },
+          "houseNumber": {
+            "type": "string",
+            "description": "The house number"
+          },
+          "locationSearchQuery": {
+            "type": "string"
+          }
+        },
+        "description": "The drop location"
+      },
+      "RequestPriceRequest": {
+        "required": [
+          "dropLocation",
+          "pickUpLocation",
+          "transportType"
+        ],
+        "type": "object",
+        "properties": {
+          "transportType": {
+            "type": "string",
+            "description": "The transport type of the shipment.",
+            "enum": [
+              "IMPORT",
+              "EXPORT",
+              "SHUNT"
+            ]
+          },
+          "containerSize": {
+            "type": "string",
+            "description": "The size of the container.",
+            "enum": [
+              "UNKNOWN",
+              "SIZE_20FT",
+              "SIZE_30FT",
+              "SIZE_40FT",
+              "SIZE_45FT",
+              "OTHER"
+            ]
+          },
+          "pickUpLocation": {
+            "$ref": "#/components/schemas/PriceCalculatorLocation"
+          },
+          "customerLocation": {
+            "$ref": "#/components/schemas/PriceCalculatorLocation"
+          },
+          "dropLocation": {
+            "$ref": "#/components/schemas/PriceCalculatorLocation"
+          },
+          "adr": {
+            "type": "boolean",
+            "description": "Calculate price according to ADR shipment.",
+            "default": false,
+            "enum": [
+              false
+            ]
+          },
+          "genSet": {
+            "type": "boolean",
+            "description": "Calculate price according to gen-set shipment.",
+            "default": false,
+            "enum": [
+              false
+            ]
+          }
+        }
+      },
+      "RequestPriceResponse": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "number",
+            "description": "The predicated price.",
+            "format": "double",
+            "example": 272.58
+          },
+          "lowerBound": {
+            "type": "number",
+            "description": "The lower bound of the price.",
+            "format": "double",
+            "example": 228.97
+          },
+          "upperBound": {
+            "type": "number",
+            "description": "The upper bound of the price.",
+            "format": "double",
+            "example": 316.19
+          },
+          "requestUsage": {
+            "type": "integer",
+            "description": "The number of used requests according to the subscription request limit.",
+            "format": "int32"
+          },
+          "adrSurcharge": {
+            "type": "number",
+            "description": "ADR surcharge.",
+            "format": "double",
+            "example": 80.19
+          },
+          "genSetSurcharge": {
+            "type": "number",
+            "description": "GenSet surcharge",
+            "format": "double",
+            "example": 10.34
+          }
+        }
+      },
+      "FourShippingRequestDto": {
+        "required": [
+          "locations"
+        ],
+        "type": "object",
+        "properties": {
+          "locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShipmentLocationActionRequestDto"
+            }
+          },
+          "isoCode": {
+            "type": "string",
+            "description": "Custom iso code provided by shipper if any.",
+            "example": "22K1"
+          }
+        }
+      },
+      "ShipmentLocationActionRequestDto": {
+        "required": [
+          "location",
+          "locationActionType",
+          "sequenceNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "sequenceNumber": {
+            "type": "integer",
+            "description": "Sequence number of a location.Required for creating/publishing a shipment.",
+            "format": "int32",
+            "example": 1
+          },
+          "dateFrom": {
+            "type": "string",
+            "description": "Start of window for this location.Required for publishing a shipment",
+            "format": "date-time"
+          },
+          "dateUntil": {
+            "type": "string",
+            "description": "End of window for this location.Required for publishing a shipment",
+            "format": "date-time"
+          },
+          "reference": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Reference needed to interact with the location",
+            "example": "12344"
+          },
+          "remarks": {
+            "type": "string",
+            "description": "Additional instructions for the carrier for this location",
+            "example": "Please wear hats to the location"
+          },
+          "vesselName": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Vessel name",
+            "example": "Prius"
+          },
+          "port": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string",
+            "description": "Name of the port. Used only in case of Pick-up or Drop location",
+            "example": "Rotterdam"
+          },
+          "shippingLineId": {
+            "type": "integer",
+            "description": "Id of the shipping line for this location",
+            "format": "int32",
+            "example": 345
+          },
+          "locationActionType": {
+            "type": "string",
+            "description": "Location type",
+            "enum": [
+              "PICKUP",
+              "DELIVER",
+              "LOAD",
+              "DROP",
+              "STOP"
+            ]
+          },
+          "location": {
+            "$ref": "#/components/schemas/ShippingLocationRequestDto"
+          },
+          "customerName": {
+            "type": "string",
+            "description": "Customer name for the location.Needed in case of Load, Deliver or Stop locations",
+            "example": "Jumbo"
+          }
+        },
+        "description": "Details related to shipment locations"
+      },
+      "ShippingLocationRequestDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of the location type. If present required for creating/publishing shipment",
+            "format": "int32",
+            "example": 56
+          },
+          "googlePlaceId": {
+            "type": "string",
+            "description": "Google place id of the location. Not required if id is present. If Id not present then required for create/publishing shipment",
+            "example": "ChIJo2PsNcQLxkcRo61nkBolVU4"
+          }
+        },
+        "description": "Location related information"
+      },
+      "RouteDetailsDto": {
+        "type": "object",
+        "description": "Four shipping route related information"
+      },
+      "TransportUpdate": {
+        "required": [
+          "action"
+        ],
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "description": "Set the action to be performed. START: start the shipment; STOP: stop the shipment; EXECUTE: Execute the shipment, for example when the shipment is executed, but no proof of delivery is available yet; FINISH: finish the shipment when a proof of delivery is uploaded. Values are case sensitive.",
+            "example": "START",
+            "enum": [
+              "START",
+              "STOP",
+              "EXECUTE",
+              "FINISH"
+            ]
+          },
+          "startShipment": {
+            "type": "boolean"
+          },
+          "stopShipment": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UpdateOrder": {
+        "type": "object",
+        "properties": {
+          "containerNumber": {
+            "type": "string",
+            "description": "The container number of the transport order. The format is in ISO 6346."
+          },
+          "seal": {
+            "type": "string",
+            "description": "The seal number of the shipment.",
+            "example": "CN0622165"
+          },
+          "tare": {
+            "type": "integer",
+            "description": "Tare value of the container in kg's.",
+            "format": "int32",
+            "example": 3810
+          },
+          "paymentReference": {
+            "type": "string",
+            "description": "Your custom reference number which will be visible on payment lines for this shipment."
+          }
+        }
+      },
+      "LocationEvent": {
+        "required": [
+          "sequenceNumber",
+          "time",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "sequenceNumber": {
+            "type": "integer",
+            "description": "Sequence number of the location action.",
+            "format": "int32",
+            "example": 1
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of the event. Values are case sensitive.",
+            "example": "ARRIVAL",
+            "enum": [
+              "ARRIVAL",
+              "DEPARTURE",
+              "ETA"
+            ]
+          },
+          "time": {
+            "type": "string",
+            "description": "The format is in ISO 8601.",
+            "format": "date-time"
+          }
+        }
+      },
+      "GenericDocumentUploadCarrier": {
+        "required": [
+          "fileInBase64format",
+          "fileName",
+          "fileType"
+        ],
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "description": "Full name of the document with extension. Allowed extensions: pdf, doc, docx, jpeg, jpg, png, tif, tiff, bmp, xls, xlsx, csv",
+            "example": "test_file.pdf"
+          },
+          "fileType": {
+            "type": "string",
+            "description": "Code of the file type.",
+            "example": "POD",
+            "enum": [
+              "POD,PROOF_COST,CUSTOMER_DOCUMENTS,INTERCHANGE,ISSUE_REPORT,SHIPMENT_GENERAL"
+            ]
+          },
+          "fileInBase64format": {
+            "type": "string",
+            "description": "File in Base64 encoded format. Max uploadable size 5MB."
+          },
+          "fileDescription": {
+            "type": "string",
+            "description": "Description of file. Max 30 characters.",
+            "example": "Proof of delivery"
+          }
+        }
+      },
+      "CancellationTypeDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ALL",
+              "OPEN_SHIPMENT",
+              "ASSIGNED_SHIPMENT"
+            ]
+          }
+        },
+        "description": "The list of valid shipment cancellation reasons."
+      },
+      "CountryDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "alphaTwoCode": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "countryRule": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "disabled": {
+            "type": "boolean"
+          }
+        },
+        "description": "The list of countries."
+      },
+      "GenericAPIShipmentMetaData": {
+        "type": "object",
+        "properties": {
+          "shipmentUnits": {
+            "type": "array",
+            "description": "The type of equipment that needs to be transported.",
+            "items": {
+              "$ref": "#/components/schemas/EquipmentType"
+            }
+          },
+          "shippingLines": {
+            "type": "array",
+            "description": "The shipping line for this shipment used to make pre-announcements.",
+            "items": {
+              "$ref": "#/components/schemas/ShippingLine"
+            }
+          },
+          "requirements": {
+            "type": "array",
+            "description": "The general type of goods that are in the container, list can be provided.",
+            "items": {
+              "$ref": "#/components/schemas/Requirement"
+            }
+          },
+          "countries": {
+            "type": "array",
+            "description": "The list of countries.",
+            "items": {
+              "$ref": "#/components/schemas/CountryDTO"
+            }
+          },
+          "cancellationTypes": {
+            "type": "array",
+            "description": "The list of valid shipment cancellation reasons.",
+            "items": {
+              "$ref": "#/components/schemas/CancellationTypeDTO"
+            }
+          },
+          "invoiceLineStatusList": {
+            "type": "array",
+            "description": "The list of valid invoice line statuses.",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceLineStatusDTO"
+            }
+          },
+          "tsoStatusList": {
+            "type": "array",
+            "description": "The list of valid TSO statuses.",
+            "items": {
+              "$ref": "#/components/schemas/TSOStatus"
+            }
+          },
+          "documentUploadFileCategories": {
+            "type": "array",
+            "description": "Document types.",
+            "items": {
+              "$ref": "#/components/schemas/GenericDocumentFileType"
+            }
+          }
+        }
+      },
+      "GenericDocumentFileType": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Code of the file type. To be used in upload document call."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the file type."
+          }
+        },
+        "description": "Document types."
+      },
+      "InvoiceLineStatusDTO": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description of invoice line status"
+          },
+          "code": {
+            "type": "string",
+            "description": "Code of invoice line status"
+          }
+        },
+        "description": "The list of valid invoice line statuses."
+      },
+      "Requirement": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the requirement",
+            "example": "Frozen cargo (-25/-18C)"
+          },
+          "code": {
+            "type": "string",
+            "description": "The code of the requirement",
+            "example": "FC"
+          }
+        },
+        "description": "The general type of goods that are in the container, list can be provided."
+      },
+      "TSOStatus": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Status description of the TSO.",
+            "example": "In Progress"
+          },
+          "code": {
+            "type": "string",
+            "description": "Status code of the TSO.",
+            "example": "IP"
+          }
+        },
+        "description": "The list of valid TSO statuses."
+      },
+      "APIShipmentDetailsDTO": {
+        "required": [
+          "shipmentNumber",
+          "shipmentUnit",
+          "transportStops"
+        ],
+        "type": "object",
+        "properties": {
+          "shipmentNumber": {
+            "type": "integer",
+            "description": "Shipment number. Not required during creation of shipment.",
+            "format": "int32",
+            "example": 70014195
+          },
+          "shipmentUnit": {
+            "$ref": "#/components/schemas/EquipmentType"
+          },
+          "equipmentId": {
+            "type": "string",
+            "description": "The container number of the transport order.Should be 11 characters.First 3 characters should be letters.4th character should be U, J or Z and last 7 characters should be numbers. The format is in ISO 6346",
+            "example": "FOTU1234567"
+          },
+          "tareWeight": {
+            "type": "integer",
+            "description": "The weight of the container",
+            "format": "int32",
+            "example": 3500
+          },
+          "generatorSet": {
+            "type": "boolean",
+            "description": "If TRUE a generator set will be required. If not filled, by default FALSE.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "example": false
+          },
+          "shippingLine": {
+            "$ref": "#/components/schemas/ShippingLine"
+          },
+          "unCode": {
+            "pattern": "^$|\\d{4}",
+            "type": "string",
+            "description": "The four digit code identifying the type of hazardous goods. Required when hazardous.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "example": "1234"
+          },
+          "seal": {
+            "type": "string",
+            "description": "Seal number of the equipment",
+            "example": "ABC123"
+          },
+          "grossWeight": {
+            "type": "integer",
+            "description": "Weight to be loaded + tare weight of container.When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "format": "int32",
+            "example": 12000
+          },
+          "cargoDescription": {
+            "maxLength": 400,
+            "minLength": 0,
+            "type": "string",
+            "description": "The general description of goods that are in the container."
+          },
+          "requirementCodes": {
+            "type": "array",
+            "description": "The specific requirements for the transport. When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+            "example": "['AC', 'OOG']",
+            "items": {
+              "type": "string",
+              "description": "The specific requirements for the transport. When updating and status is Carrier Assigned, the carrier first needs to approve the update request.",
+              "example": "['AC', 'OOG']"
+            }
+          },
+          "remarks": {
+            "type": "string",
+            "description": "Additional remarks for this shipment",
+            "example": "Driver should wear white socks"
+          },
+          "transportStops": {
+            "maxItems": 2147483647,
+            "minItems": 2,
+            "type": "array",
+            "description": "Array of minimum 2 or more stops describing the stops required to execute the transport",
+            "items": {
+              "$ref": "#/components/schemas/TransportStop"
+            }
+          },
+          "invoiceReference": {
+            "type": "string",
+            "description": "Reference that will be used on the invoice.",
+            "example": "Invoice52846"
+          },
+          "price": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Target price of the published transport, agreed price of the preferred carrier(s).Must be greater than 0.",
+            "format": "int32",
+            "example": 450
+          },
+          "vat": {
+            "type": "boolean",
+            "description": "If TRUE, normal VAT rules will apply. If FALSE, 0% VAT will apply on this shipment.By default FALSE.",
+            "example": false
+          },
+          "acceptancePrice": {
+            "type": "boolean",
+            "description": "If TRUE carriers can accept the shipment for the price. If FALSE, it is bid only.By default FALSE.",
+            "example": false
+          },
+          "carriers": {
+            "type": "array",
+            "description": "List of preferred carriers for this shipment. If empty, the shipment is published on the market.",
+            "example": [
+              10000872,
+              10000873
+            ],
+            "items": {
+              "type": "integer",
+              "description": "List of preferred carriers for this shipment. If empty, the shipment is published on the market.",
+              "format": "int32"
+            }
+          },
+          "publishFrom": {
+            "type": "string",
+            "description": "Date time to publish shipment from.The format is in ISO 8601",
+            "format": "date-time",
+            "example": "2021-11-11T13:34:58.8+02:00"
+          },
+          "publishUntil": {
+            "type": "string",
+            "description": "Date time to publish shipment until.The format is in ISO 8601",
+            "format": "date-time",
+            "example": "2021-11-11T13:34:58.8+02:00"
+          },
+          "shipmentStatus": {
+            "type": "string",
+            "description": "Current status of the shipment.",
+            "example": "Carrier Assigned, Completed, Executed, Cancelled"
+          },
+          "tsoStatus": {
+            "type": "string",
+            "description": "Current status of Transport Order (if carrier assigned).",
+            "example": "In Progress, Executed, Invoiced, Cancelled, Cost Declared"
+          }
+        }
+      },
+      "CarrierQuote": {
+        "type": "object",
+        "properties": {
+          "quotedPrice": {
+            "type": "number",
+            "description": "Price quoted by the carrier",
+            "example": 237
+          },
+          "quotedId": {
+            "type": "integer",
+            "description": "ID of the quoted price. This ID is used to assign a carrier to a shipment.",
+            "format": "int32",
+            "example": 3826
+          },
+          "organisationName": {
+            "type": "string",
+            "description": "Organisation name of the carrier",
+            "example": "UTURN CARRIER B.V."
+          },
+          "capabilities": {
+            "type": "array",
+            "description": "List of capabilities provided by the carrier",
+            "example": "[ADR,AEO,Gen-Set]",
+            "items": {
+              "type": "string",
+              "description": "List of capabilities provided by the carrier",
+              "example": "[ADR,AEO,Gen-Set]"
+            }
+          },
+          "rating": {
+            "type": "number",
+            "description": "Carrier rating out of 5 stars.",
+            "example": 3.1
+          }
+        }
+      },
+      "GenericDocument": {
+        "type": "object",
+        "properties": {
+          "fullFileName": {
+            "type": "string",
+            "description": "Full name of the document with extension."
+          },
+          "fileName": {
+            "type": "string",
+            "description": "File name of the document"
+          },
+          "fileExtension": {
+            "type": "string",
+            "description": "File extension of the document."
+          },
+          "fileInBase64format": {
+            "type": "string",
+            "description": "File in Base64 encoded format."
+          }
+        }
+      },
+      "CostLine": {
+        "type": "object",
+        "properties": {
+          "invoiceNumber": {
+            "type": "integer",
+            "description": "Invoice number of the related invoice (if applicable).",
+            "format": "int32",
+            "example": 1234567
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the cost line. Normally the shipment ID in combination with the cost type.",
+            "example": "70013199 - Transport"
+          },
+          "reference": {
+            "type": "string",
+            "description": "The invoice reference of the shipment.",
+            "example": "Some reference"
+          },
+          "lineStatus": {
+            "type": "string",
+            "description": "The status of the cost line.",
+            "example": "Wait for Approval"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount of the cost line.",
+            "example": 150
+          },
+          "taxCode": {
+            "type": "string",
+            "description": "The tax code of the cost line.",
+            "example": "NL0"
+          },
+          "vatAmount": {
+            "type": "number",
+            "description": "Vat amount of the cost line.",
+            "example": 150
+          },
+          "totalAmount": {
+            "type": "number",
+            "description": "Total amount of the cost line. Amount plus vatAmount.",
+            "example": 150
+          },
+          "approvedDate": {
+            "type": "string",
+            "description": "Date that the cost line was approved in the platform.",
+            "format": "date",
+            "example": "2020-10-16"
+          },
+          "carrierComment": {
+            "type": "string",
+            "description": "The carrier comment of the cost line.",
+            "example": "any comment"
+          }
+        },
+        "description": "List of cost line objects."
+      },
+      "CostLines": {
+        "type": "object",
+        "properties": {
+          "lines": {
+            "type": "array",
+            "description": "List of cost line objects.",
+            "items": {
+              "$ref": "#/components/schemas/CostLine"
+            }
+          },
+          "totalExclusiveVAT": {
+            "type": "number",
+            "description": "Total amount of the cost lines of the shipment, excluding VAT.",
+            "example": 150
+          },
+          "totalInclusiveVAT": {
+            "type": "number",
+            "description": "Total amount of the cost lines of the shipment, including VAT.",
+            "example": 150
+          },
+          "totalVAT": {
+            "type": "number",
+            "description": "Total VAT amount of the cost lines of the shipment.",
+            "example": 150
+          }
+        }
+      },
+      "TransportExecutionDetails": {
+        "type": "object",
+        "properties": {
+          "tareWeight": {
+            "type": "integer",
+            "description": "The weight of the container",
+            "format": "int32",
+            "example": 3500
+          },
+          "seal": {
+            "type": "string",
+            "description": "Seal number of the equipment",
+            "example": "ABC123"
+          },
+          "equipmentId": {
+            "type": "string",
+            "description": "The container number of the transport order. The format is in ISO 6346.",
+            "example": "FOTU1234567"
+          },
+          "transportStops": {
+            "type": "array",
+            "description": "Array of minimum 2 or more stops describing the stops required to execute the transport",
+            "items": {
+              "$ref": "#/components/schemas/TransportStop"
+            }
+          },
+          "shipmentStatus": {
+            "type": "string",
+            "description": "Current status of the shipment.",
+            "example": "Carrier Assigned, Completed, Executed, Cancelled"
+          },
+          "tsoStatus": {
+            "type": "string",
+            "description": "Current status of Transport Order.",
+            "example": "In Progress, Executed, Invoiced, Cancelled, Cost Declared"
+          }
+        }
+      },
+      "CarrierContract": {
+        "type": "object",
+        "properties": {
+          "organisationName": {
+            "type": "string",
+            "description": "Organisation name of the carrier",
+            "example": "UTURN CARRIER B.V."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of the carrier",
+            "example": "maxcar16@mailinator.com"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name of the carrier",
+            "example": "Maxime"
+          },
+          "surName": {
+            "type": "string",
+            "description": "Surname of the carrier",
+            "example": "CARREY"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Contact phone of the carrier",
+            "example": "0666501432"
+          },
+          "oooPhone": {
+            "type": "string",
+            "description": "Out of office phone of the carrier",
+            "example": "0666501431"
+          },
+          "capabilities": {
+            "type": "array",
+            "description": "List of capabilities provided by the carrier",
+            "example": "[ADR,AEO,Gen-Set]",
+            "items": {
+              "type": "string",
+              "description": "List of capabilities provided by the carrier",
+              "example": "[ADR,AEO,Gen-Set]"
+            }
+          },
+          "agreedPrice": {
+            "type": "integer",
+            "description": "Agreed price of the shipment",
+            "format": "int32",
+            "example": 256
+          },
+          "action": {
+            "type": "string",
+            "description": "Whether carrier accepted the shipment or was assigned by shipper.",
+            "example": "Accepted"
+          },
+          "rating": {
+            "type": "number",
+            "description": "Carrier rating out of 5 stars.",
+            "example": 3.1
+          },
+          "eanNumber": {
+            "type": "string",
+            "description": "EAN number of the carrier."
+          },
+          "cargoCardNumber": {
+            "type": "string",
+            "description": "CargoCard number of the carrier."
+          }
+        }
+      },
+      "AddressDto": {
+        "required": [
+          "countryCode",
+          "postalCode"
+        ],
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "description": "Street name",
+            "example": "Marconiplein"
+          },
+          "houseNumber": {
+            "type": "string",
+            "description": "House number",
+            "example": "45A"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal Code",
+            "example": "4345XA"
+          },
+          "city": {
+            "type": "string",
+            "description": "City",
+            "example": "Rotterdam"
+          },
+          "countryCode": {
+            "maxLength": 2,
+            "minLength": 2,
+            "type": "string",
+            "description": "ISO 3166-1 alpha-2 letter country code",
+            "example": "NL"
+          },
+          "latitude": {
+            "type": "number",
+            "description": "Latitude of a place",
+            "format": "double",
+            "example": 51.9799731
+          },
+          "longitude": {
+            "type": "number",
+            "description": "Longitude of a place",
+            "format": "double",
+            "example": 12.1016236
+          }
+        },
+        "description": "Address of location or organization."
+      },
+      "CurrencyType": {
+        "type": "string",
+        "description": "Currency code",
+        "enum": [
+          "EUR",
+          "GBP"
+        ]
+      },
+      "PageableResponseShipmentListDTO": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShipmentListDTO"
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "usedSortOption": {
+            "type": "string",
+            "enum": [
+              "CLOSEST_FIRST",
+              "FARTHEST_FIRST",
+              "PICKUP_DESCENDING",
+              "PICKUP_ASCENDING",
+              "NEWEST_FIRST",
+              "OLDEST_FIRST"
+            ]
+          }
+        }
+      },
+      "PriceDto": {
+        "required": [
+          "currencyCode",
+          "quantity"
+        ],
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "number",
+            "description": "Quantity",
+            "example": 34.56
+          },
+          "currencyCode": {
+            "$ref": "#/components/schemas/CurrencyType"
+          }
+        },
+        "description": "Price related information"
+      },
+      "ShipmentListDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The shipment id",
+            "format": "int32"
+          },
+          "shipmentNumber": {
+            "type": "integer",
+            "description": "The shipment number",
+            "format": "int32"
+          },
+          "batchId": {
+            "type": "string",
+            "description": "The batch id"
+          },
+          "shipmentsInBatch": {
+            "type": "integer",
+            "description": "The number of shipments in the batch",
+            "format": "int64"
+          },
+          "locationActions": {
+            "type": "array",
+            "description": "The list of shipment locations",
+            "items": {
+              "$ref": "#/components/schemas/ShipmentLocationActionDto"
+            }
+          },
+          "containerNumber": {
+            "type": "string",
+            "description": "The container number of the transport order",
+            "nullable": true
+          },
+          "shipmentUnitDescription": {
+            "type": "string",
+            "description": "The description of the shipment unit",
+            "nullable": true
+          },
+          "requirements": {
+            "type": "array",
+            "description": "The list of requirements",
+            "nullable": true,
+            "items": {
+              "type": "string",
+              "description": "The list of requirements",
+              "nullable": true
+            }
+          },
+          "quoteCount": {
+            "type": "integer",
+            "description": "The number of quotes on the shipment",
+            "format": "int32",
+            "nullable": true
+          },
+          "carrierOrganizationName": {
+            "type": "string",
+            "description": "The carrier organization name",
+            "nullable": true
+          },
+          "price": {
+            "$ref": "#/components/schemas/PriceDto"
+          },
+          "shipperReference": {
+            "type": "string",
+            "description": "The reference that will be used on the invoice.",
+            "nullable": true
+          },
+          "pendingChangeRequest": {
+            "type": "boolean",
+            "description": "If True, there is a pending change request on the shipment"
+          }
+        }
+      },
+      "ShipmentLocationActionDto": {
+        "required": [
+          "id",
+          "location",
+          "locationActionType",
+          "sequenceNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 65
+          },
+          "sequenceNumber": {
+            "type": "integer",
+            "description": "Sequence number of a location.Required for creating/publishing a shipment.",
+            "format": "int32",
+            "example": 1
+          },
+          "dateFrom": {
+            "type": "string",
+            "description": "Start of window for this location.Required for publishing a shipment",
+            "format": "date-time",
+            "example": "2023-09-13T15:16:00Z"
+          },
+          "dateUntil": {
+            "type": "string",
+            "description": "End of window for this location.Required for publishing a shipment",
+            "format": "date-time",
+            "example": "2023-09-13T15:16:00Z"
+          },
+          "eta": {
+            "type": "string",
+            "description": "Estimated time of arrival",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2023-01-24T13:34:00Z"
+          },
+          "reference": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Reference needed to interact with the location",
+            "example": "12344"
+          },
+          "remarks": {
+            "type": "string",
+            "description": "Additional instructions for the carrier for this location",
+            "example": "Please wear hats to the location"
+          },
+          "vesselName": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Vessel name",
+            "example": "Prius"
+          },
+          "port": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string",
+            "description": "Name of the port. Used only in case of Pick-up or Drop location",
+            "example": "Rotterdam"
+          },
+          "shippingLine": {
+            "$ref": "#/components/schemas/ShippingLineDto"
+          },
+          "locationActionType": {
+            "type": "string",
+            "description": "Location type",
+            "enum": [
+              "Pick-up",
+              "Deliver",
+              "Load",
+              "Drop",
+              "Stop",
+              ""
+            ]
+          },
+          "location": {
+            "$ref": "#/components/schemas/ShippingLocationDto"
+          },
+          "customerName": {
+            "type": "string",
+            "description": "Customer name for the location.Needed in case of Load, Deliver or Stop locations",
+            "example": "Jumbo"
+          }
+        },
+        "description": "Details related to shipment locations"
+      },
+      "ShippingLineDto": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of the shipping line",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "description": "The code of shipping line"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of shipping line"
+          }
+        },
+        "description": "Shipping line"
+      },
+      "ShippingLocationDto": {
+        "required": [
+          "googlePlaceId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of the location type. If present required for creating/publishing shipment",
+            "format": "int32",
+            "example": 56
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the location. Not required for create/publishing shipment",
+            "example": "Rotterdam Sea Terminal (RST)"
+          },
+          "averageRating": {
+            "type": "number",
+            "description": "Average rating of the location. Not required for create/publishing shipment",
+            "format": "float",
+            "example": 3.4
+          },
+          "timesRated": {
+            "type": "integer",
+            "description": "Number of ratings for the location. Not required for create/publishing shipment",
+            "format": "int32",
+            "example": 324
+          },
+          "portbaseBics": {
+            "type": "string",
+            "description": "Portbase BICS of the location. Not required for create/publishing shipment",
+            "example": "00EMX"
+          },
+          "fourShippingTerminalCode": {
+            "type": "string",
+            "description": "Four shipping terminal code. Not required for create/publishing shipment",
+            "example": "0APMA"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "googlePlaceId": {
+            "type": "string",
+            "description": "Google place id of the location. Not required if id is present. If Id not present then required for create/publishing shipment",
+            "example": "ChIJo2PsNcQLxkcRo61nkBolVU4"
+          }
+        },
+        "description": "Location related information for the shipment"
+      },
+      "CarrierWithRating": {
+        "required": [
+          "name",
+          "orgId"
+        ],
+        "type": "object",
+        "properties": {
+          "orgId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "averageRating": {
+            "type": "number",
+            "description": "The average rating of this carrier. Will be null if the carrier hasn't been rated yet.",
+            "format": "float",
+            "nullable": true
+          },
+          "timesRated": {
+            "type": "integer",
+            "description": "How often this carrier has been rated. Will be null if the carrier hasn't been rated yet.",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "EquipmentDto": {
+        "required": [
+          "shipmentUnitId"
+        ],
+        "type": "object",
+        "properties": {
+          "shipmentUnitId": {
+            "type": "integer",
+            "description": "Id of the shipment unit",
+            "format": "int32",
+            "example": 3242
+          },
+          "containerNumber": {
+            "type": "string",
+            "description": "The container number of the shipment order.Should be 11 characters.First 3 characters should be letters. 4th character should be U, J or Z and last 7 characters should be numbers.The format is in ISO 6346.",
+            "example": "FOTU1234567"
+          },
+          "isoType": {
+            "type": "string",
+            "description": "Iso type of the equipment",
+            "example": "22G1"
+          }
+        },
+        "description": "Equipment related information"
+      },
+      "QuoteDto": {
+        "required": [
+          "carrierName",
+          "carrierOrgId",
+          "condition",
+          "id",
+          "price"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "carrierName": {
+            "type": "string"
+          },
+          "carrierOrgId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "$ref": "#/components/schemas/PriceDto"
+          },
+          "condition": {
+            "type": "string"
+          }
+        }
+      },
+      "RequirementDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "ShipmentDto": {
+        "required": [
+          "batchId",
+          "equipment",
+          "id",
+          "locationActions",
+          "number",
+          "requirements",
+          "shipmentsInBatch"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "batchId": {
+            "type": "string"
+          },
+          "shipmentsInBatch": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "locationActions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShipmentLocationActionDto"
+            }
+          },
+          "shipmentUnitDescription": {
+            "type": "string"
+          },
+          "requirements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RequirementDTO"
+            }
+          },
+          "equipment": {
+            "$ref": "#/components/schemas/EquipmentDto"
+          },
+          "unCode": {
+            "type": "string"
+          },
+          "seal": {
+            "type": "string"
+          },
+          "cargoDescription": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "price": {
+            "$ref": "#/components/schemas/PriceDto"
+          },
+          "grossWeight": {
+            "$ref": "#/components/schemas/WeightDto"
+          },
+          "shipperReference": {
+            "type": "string"
+          },
+          "carrierWithRating": {
+            "$ref": "#/components/schemas/CarrierWithRating"
+          },
+          "shippingLine": {
+            "$ref": "#/components/schemas/ShippingLineDto"
+          },
+          "shipmentStatus": {
+            "type": "string",
+            "enum": [
+              "UNKNOWN",
+              "PUBLISHED",
+              "QUOTED",
+              "CARRIER_ASSIGNED",
+              "EXECUTED",
+              "COMPLETED",
+              "CANCELLED",
+              "CONCEPT"
+            ]
+          },
+          "tsoStatus": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "IN_PROGRESS",
+              "INVOICED",
+              "EXECUTED",
+              "CANCELLED",
+              "COST_DECLARED"
+            ]
+          },
+          "pendingChangeRequest": {
+            "type": "boolean"
+          },
+          "dutiesPaid": {
+            "type": "boolean"
+          },
+          "generatorSet": {
+            "type": "boolean"
+          },
+          "fixedPrice": {
+            "type": "boolean"
+          },
+          "conditions": {
+            "type": "string",
+            "enum": [
+              "AVC",
+              "CMR"
+            ]
+          },
+          "quotes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteDto"
+            }
+          },
+          "preferredCarriers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CarrierWithRating"
+            }
+          },
+          "publishUntil": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "WeightDto": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "number",
+            "description": "Weight of container or shipment",
+            "example": 34.56
+          },
+          "unit": {
+            "$ref": "#/components/schemas/WeightUnit"
+          }
+        },
+        "description": "Weight details of container"
+      },
+      "WeightUnit": {
+        "type": "string",
+        "description": "Unit of measuring weight",
+        "enum": [
+          "KG",
+          "LB"
+        ]
+      },
+      "PriceCalculatorSubscription": {
+        "type": "object",
+        "properties": {
+          "tier": {
+            "type": "string",
+            "description": "The subscription tier."
+          },
+          "product": {
+            "type": "string",
+            "description": "The product name."
+          },
+          "price": {
+            "type": "number",
+            "description": "The subscription price."
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of subscription",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date of subscription.",
+            "format": "date"
+          },
+          "requestedBy": {
+            "type": "string",
+            "description": "The requested by user name."
+          },
+          "requestLimit": {
+            "type": "integer",
+            "description": "The limit of requests per month.",
+            "format": "int32"
+          },
+          "requestUsage": {
+            "type": "integer",
+            "description": "The number of used requests.",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "description": "This is the api_key header",
+        "name": "api_key",
+        "in": "header"
+      },
+      "Authorization": {
+        "type": "apiKey",
+        "description": "This is the normal authentication",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  }
+}
